@@ -5,8 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Account Setup — Strategy Cues</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
-<!-- EmailJS SDK -->
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <style>
 /* ═══════════════════════════════════════════
    STRATEGY CUES — BLACK & GOLD THEME
@@ -417,26 +415,62 @@ hr.div { border: none; border-top: 1px solid var(--inp-border); margin: 20px 0; 
 
 <!-- ═══ PRE-FILL MODAL ═══ -->
 <div class="overlay" id="modal-prefill">
-  <div class="modal">
+  <div class="modal" style="max-width:540px">
     <h3>Pre-fill Contact Information</h3>
-    <p>Set default values before sharing the form with your customer. They can still edit all fields before submitting.</p>
-    <div class="mf"><label>Name (Phone Contact)</label><input type="text" id="pre-pname" placeholder="e.g. Riya"></div>
-    <div class="mf"><label>Phone Number</label><input type="tel" id="pre-pnum" placeholder="e.g. +971 528771983"></div>
-    <div class="mf"><label>Our WhatsApp — Name 1</label><input type="text" id="pre-w1name" placeholder="e.g. Devina"></div>
-    <div class="mf"><label>Our WhatsApp — Number 1</label><input type="tel" id="pre-w1num" placeholder="e.g. +918899078882"></div>
-    <div class="modal-foot">
+    <p>Enter the contact details you want pre-filled for the partner. Click <strong style="color:var(--gold)">Save &amp; Generate Link</strong> — copy the link and share it. When the partner opens it, these fields are pre-populated and fully editable.</p>
+    <div style="background:rgba(212,168,67,.06);border:1px solid rgba(212,168,67,.18);border-radius:var(--rs);padding:10px 14px;margin-bottom:14px;font-size:.76rem;color:#c8a860;font-weight:600;letter-spacing:.05em;text-transform:uppercase">Phone for Verification</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px">
+      <div class="mf" style="margin:0"><label>Name</label><input type="text" id="pre-pname" placeholder="e.g. Tejas"></div>
+      <div class="mf" style="margin:0"><label>Phone Number</label><input type="tel" id="pre-pnum" placeholder="e.g. +971 528771983"></div>
+    </div>
+    <div style="background:rgba(212,168,67,.06);border:1px solid rgba(212,168,67,.18);border-radius:var(--rs);padding:10px 14px;margin-bottom:14px;font-size:.76rem;color:#c8a860;font-weight:600;letter-spacing:.05em;text-transform:uppercase">Our WhatsApp Numbers</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
+      <div class="mf" style="margin:0"><label>Contact 1 — Name</label><input type="text" id="pre-w1name" placeholder="e.g. Devina"></div>
+      <div class="mf" style="margin:0"><label>Contact 1 — Number</label><input type="tel" id="pre-w1num" placeholder="e.g. +91 8899078882"></div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      <div class="mf" style="margin:0"><label>Contact 2 — Name</label><input type="text" id="pre-w2name" placeholder="e.g. Tejas"></div>
+      <div class="mf" style="margin:0"><label>Contact 2 — Number</label><input type="tel" id="pre-w2num" placeholder="e.g. +971 528771983"></div>
+    </div>
+    <div class="modal-foot" style="flex-wrap:wrap;gap:8px;margin-top:22px">
       <button class="btn-mc" onclick="closeOv('modal-prefill')">Cancel</button>
-      <button class="btn-ms" onclick="applyPrefill()">Save &amp; Apply</button>
+      <button class="btn-mc" style="border-color:var(--gold-dim);color:var(--gold)" onclick="applyPrefill()">Apply to page only</button>
+      <button class="btn-ms" onclick="generateLink()">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg>
+        Save &amp; Generate Link
+      </button>
     </div>
   </div>
 </div>
+
+<!-- ═══ SHARE LINK MODAL ═══ -->
+<div class="overlay" id="modal-link">
+  <div class="modal" style="max-width:520px">
+    <h3>Shareable Link Ready ✓</h3>
+    <p>Copy this link and share it with your partner. When they open it, the phone and WhatsApp fields will be pre-filled with the values you entered — they can still edit everything before submitting.</p>
+    <div style="position:relative;margin-bottom:8px">
+      <input type="text" id="share-link-input" readonly
+        style="width:100%;padding:11px 64px 11px 12px;border-radius:var(--rs);font-size:.78rem;color:var(--text2);background:var(--inp-bg);border:1.5px solid var(--inp-border);cursor:pointer"
+        onclick="this.select()">
+      <button onclick="copyLink()" id="copy-btn"
+        style="position:absolute;right:6px;top:50%;transform:translateY(-50%);background:var(--gold);border:none;border-radius:5px;padding:6px 12px;cursor:pointer;font-size:.72rem;font-weight:700;color:#111;font-family:'DM Sans',sans-serif;transition:background .15s">
+        Copy
+      </button>
+    </div>
+    <p style="font-size:.76rem;color:var(--text3);margin-bottom:22px;line-height:1.5">The partner can edit all pre-filled fields. The link encodes the contact info — no server or database needed.</p>
+    <div class="modal-foot">
+      <button class="btn-ms" onclick="closeOv('modal-link')">Done</button>
+    </div>
+  </div>
+</div>
+
 
 <!-- ═══ EMAIL SETTINGS MODAL ═══ -->
 <div class="overlay" id="modal-email">
   <div class="modal">
     <h3>Notification Email Settings</h3>
     <p>Update the email address that receives all form submission details in a tabular summary.</p>
-    <div class="mf"><label>Recipient Email Address</label><input type="email" id="notif-email" value="samruddhi.waghchaure@strategycues.com"></div>
+    <div class="mf"><label>Recipient Email Address</label><input type="email" id="notif-email" value="revenue@strategycues.com"></div>
     <div class="modal-foot">
       <button class="btn-mc" onclick="closeOv('modal-email')">Cancel</button>
       <button class="btn-ms" onclick="saveEmail()">Save Email</button>
@@ -444,21 +478,6 @@ hr.div { border: none; border-top: 1px solid var(--inp-border); margin: 20px 0; 
   </div>
 </div>
 
-<!-- ═══ EMAILJS SETUP MODAL ═══ -->
-<div class="overlay" id="modal-setup">
-  <div class="modal">
-    <h3>Email Service Setup</h3>
-    <p>To send real emails, enter your <strong style="color:var(--gold)">EmailJS</strong> credentials. Sign up free at <a href="https://emailjs.com" target="_blank" style="color:var(--gold)">emailjs.com</a> — it takes 2 minutes and 200 free emails/month.</p>
-    <div class="mf"><label>Public Key</label><input type="text" id="ejs-pubkey" placeholder="e.g. abc123XYZ..."></div>
-    <div class="mf"><label>Service ID</label><input type="text" id="ejs-service" placeholder="e.g. service_xxxxxxx"></div>
-    <div class="mf"><label>Template ID</label><input type="text" id="ejs-template" placeholder="e.g. template_xxxxxxx"></div>
-    <p style="font-size:.77rem;color:var(--text3);margin-top:10px">In your EmailJS template, use these variables: <code style="color:var(--gold)">{{to_email}}</code>, <code style="color:var(--gold)">{{subject}}</code>, <code style="color:var(--gold)">{{message}}</code></p>
-    <div class="modal-foot">
-      <button class="btn-mc" onclick="closeOv('modal-setup')">Cancel</button>
-      <button class="btn-ms" onclick="saveEJSConfig()">Save Config</button>
-    </div>
-  </div>
-</div>
 
 <!-- ═══ SUCCESS OVERLAY ═══ -->
 <div class="overlay" id="overlay-success">
@@ -489,15 +508,11 @@ hr.div { border: none; border-top: 1px solid var(--inp-border); margin: 20px 0; 
     <div class="admin-acts">
       <button class="btn btn-gold" onclick="openOv('modal-prefill')">
         <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-        Pre-fill Contact Info
+        Pre-fill &amp; Get Shareable Link
       </button>
       <button class="btn btn-dark" onclick="openOv('modal-email')">
         <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
         Email Settings
-      </button>
-      <button class="btn btn-outline" onclick="openOv('modal-setup')">
-        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93l-1.41 1.41M4.93 4.93l1.41 1.41M19.07 19.07l-1.41-1.41M4.93 19.07l1.41-1.41M12 2v2M12 20v2M2 12h2M20 12h2"/></svg>
-        Email API Setup
       </button>
       <button class="btn btn-outline" onclick="clearAll()">Clear All</button>
     </div>
@@ -514,7 +529,7 @@ hr.div { border: none; border-top: 1px solid var(--inp-border); margin: 20px 0; 
       Official Email ID <span class="req">*</span>
       <span class="tip-wrap" style="margin-left:2px">
         <span class="tip-icon">i</span>
-        <span class="tip-bubble">Use your organization's domain email (e.g. you@yourcompany.com). Personal emails like Gmail are not accepted.</span>
+        <span class="tip-bubble">Use your organization's domain email (e.g. <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="e59c8a90a59c8a9097868a8895848b9ccb868a88">[email&#160;protected]</a>). Personal emails like Gmail are not accepted.</span>
       </span>
     </div>
     <div class="email-row">
@@ -542,9 +557,9 @@ hr.div { border: none; border-top: 1px solid var(--inp-border); margin: 20px 0; 
       <div class="seg-icon-cell">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6a6050" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 014.9 13.6 19.79 19.79 0 011.87 5.09a2 2 0 012-2.18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 10.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 17z"/></svg>
       </div>
-      <input type="text" class="seg-name-inp" id="phone-name" placeholder="Name">
+      <input type="text" class="seg-name-inp" id="phone-name" placeholder="Name" value="Tejas">
       <div class="seg-arr">›</div>
-      <input type="tel" class="seg-num-inp" id="phone-number" placeholder="Phone number" value="+971 528771983">
+      <input type="tel" class="seg-num-inp" id="phone-number" placeholder="+country code - number" value="+971 528771983">
     </div>
 
     <!-- Our WhatsApp Numbers -->
@@ -554,14 +569,14 @@ hr.div { border: none; border-top: 1px solid var(--inp-border); margin: 20px 0; 
         <div class="seg-icon-cell" style="background:var(--cell-bg);border:1.5px solid var(--inp-border);border-right:none"><svg width="14" height="14" viewBox="0 0 24 24" fill="#25a244"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/><path d="M12 0C5.374 0 0 5.373 0 12c0 2.126.553 4.127 1.519 5.874L0 24l6.335-1.508A11.946 11.946 0 0012 24c6.626 0 12-5.374 12-12S18.626 0 12 0zm0 21.818a9.818 9.818 0 01-5.006-1.375l-.36-.214-3.727.978.995-3.636-.235-.374A9.817 9.817 0 012.182 12C2.182 6.579 6.579 2.182 12 2.182S21.818 6.579 21.818 12 17.421 21.818 12 21.818z"/></svg></div>
         <input type="text" class="seg-name-inp wa-name" placeholder="Name" value="Devina">
         <div class="seg-arr" style="background:var(--cell-bg);border-top:1.5px solid var(--inp-border);border-bottom:1.5px solid var(--inp-border)">›</div>
-        <input type="tel" class="seg-num-inp no-rr wa-num" placeholder="+country code number" value="+918899078882">
+        <input type="tel" class="seg-num-inp no-rr wa-num" placeholder="+country code - number" value="+918899078882">
         <div class="seg-lock-cell" onclick="toggleLock(this)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div>
       </div>
       <div class="seg-row wa-item">
         <div class="seg-icon-cell" style="background:var(--cell-bg);border:1.5px solid var(--inp-border);border-right:none"><svg width="14" height="14" viewBox="0 0 24 24" fill="#25a244"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/><path d="M12 0C5.374 0 0 5.373 0 12c0 2.126.553 4.127 1.519 5.874L0 24l6.335-1.508A11.946 11.946 0 0012 24c6.626 0 12-5.374 12-12S18.626 0 12 0zm0 21.818a9.818 9.818 0 01-5.006-1.375l-.36-.214-3.727.978.995-3.636-.235-.374A9.817 9.817 0 012.182 12C2.182 6.579 6.579 2.182 12 2.182S21.818 6.579 21.818 12 17.421 21.818 12 21.818z"/></svg></div>
         <input type="text" class="seg-name-inp wa-name" placeholder="Name" value="Tejas">
         <div class="seg-arr" style="background:var(--cell-bg);border-top:1.5px solid var(--inp-border);border-bottom:1.5px solid var(--inp-border)">›</div>
-        <input type="tel" class="seg-num-inp no-rr wa-num" placeholder="+country code number" value="+971 528771983">
+        <input type="tel" class="seg-num-inp no-rr wa-num" placeholder="+country code - number" value="+971 528771983">
         <div class="seg-lock-cell" onclick="toggleLock(this)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div>
       </div>
     </div>
@@ -573,13 +588,13 @@ hr.div { border: none; border-top: 1px solid var(--inp-border); margin: 20px 0; 
     <hr class="div">
 
     <!-- Customer WhatsApp Numbers -->
-    <div class="lbl">Your WhatsApp Numbers for Communication</div>
+    <div class="lbl">Your Emergency WhatsApp Numbers for Communication <span class="req">*</span></div>
     <div id="your-wa-list">
       <div class="seg-row cust-wa-item">
         <div class="seg-icon-cell" style="background:var(--cell-bg);border:1.5px solid var(--inp-border);border-right:none"><svg width="14" height="14" viewBox="0 0 24 24" fill="#25a244"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/><path d="M12 0C5.374 0 0 5.373 0 12c0 2.126.553 4.127 1.519 5.874L0 24l6.335-1.508A11.946 11.946 0 0012 24c6.626 0 12-5.374 12-12S18.626 0 12 0zm0 21.818a9.818 9.818 0 01-5.006-1.375l-.36-.214-3.727.978.995-3.636-.235-.374A9.817 9.817 0 012.182 12C2.182 6.579 6.579 2.182 12 2.182S21.818 6.579 21.818 12 17.421 21.818 12 21.818z"/></svg></div>
         <input type="text" class="seg-name-inp cust-name" placeholder="Name">
         <div class="seg-arr" style="background:var(--cell-bg);border-top:1.5px solid var(--inp-border);border-bottom:1.5px solid var(--inp-border)">›</div>
-        <input type="tel" class="seg-num-inp cust-num" placeholder="+country code number">
+        <input type="tel" class="seg-num-inp cust-num" placeholder="+country code - number">
       </div>
     </div>
     <button class="btn btn-add" onclick="addYourWA()">
@@ -620,16 +635,9 @@ hr.div { border: none; border-top: 1px solid var(--inp-border); margin: 20px 0; 
 </div><!-- /.wrap -->
 
 <!-- ═══════════════════ JS ═══════════════════ -->
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 /* ── State ── */
-let notifEmail = 'samruddhi.waghchaure@strategycues.com';
-let ejsConfig = { publicKey: '', serviceId: '', templateId: '' };
-
-/* Try load saved config */
-try {
-  const saved = JSON.parse(sessionStorage.getItem('ejs_cfg') || '{}');
-  if (saved.publicKey) { ejsConfig = saved; emailjs.init({ publicKey: saved.publicKey }); }
-} catch(e) {}
+let notifEmail = 'revenue@strategycues.com';
 
 /* ── Overlay helpers ── */
 function openOv(id)  { document.getElementById(id).classList.add('open'); }
@@ -637,32 +645,101 @@ function closeOv(id) { document.getElementById(id).classList.remove('open'); }
 
 /* ── Pre-fill ── */
 function applyPrefill() {
-  const pn = g('pre-pname'), pp = g('pre-pnum'), w1n = g('pre-w1name'), w1p = g('pre-w1num');
+  const pn  = g('pre-pname'),  pp  = g('pre-pnum');
+  const w1n = g('pre-w1name'), w1p = g('pre-w1num');
+  const w2n = g('pre-w2name'), w2p = g('pre-w2num');
   if (pn) document.getElementById('phone-name').value = pn;
   if (pp) document.getElementById('phone-number').value = pp;
   const rows = document.querySelectorAll('.wa-item');
   if (rows[0]) {
     if (w1n) rows[0].querySelector('.wa-name').value = w1n;
-    if (w1p) rows[0].querySelector('.wa-num').value = w1p;
+    if (w1p) rows[0].querySelector('.wa-num').value  = w1p;
+  }
+  if (rows[1]) {
+    if (w2n) rows[1].querySelector('.wa-name').value = w2n;
+    if (w2p) rows[1].querySelector('.wa-num').value  = w2p;
   }
   closeOv('modal-prefill');
-  toast('Contact info pre-filled ✓');
+  toast('Contact info applied ✓');
+}
+
+/* ── Generate shareable link ── */
+function generateLink() {
+  const pn  = g('pre-pname'),  pp  = g('pre-pnum');
+  const w1n = g('pre-w1name'), w1p = g('pre-w1num');
+  const w2n = g('pre-w2name'), w2p = g('pre-w2num');
+
+  const params = new URLSearchParams();
+  if (pn)  params.set('pn',  pn);
+  if (pp)  params.set('pp',  pp);
+  if (w1n) params.set('w1n', w1n);
+  if (w1p) params.set('w1p', w1p);
+  if (w2n) params.set('w2n', w2n);
+  if (w2p) params.set('w2p', w2p);
+
+  const base = window.location.origin + window.location.pathname;
+  const link = base + '?' + params.toString();
+
+  document.getElementById('share-link-input').value = link;
+  closeOv('modal-prefill');
+  openOv('modal-link');
+
+  // Also apply to current page
+  applyFromParams(pn, pp, w1n, w1p, w2n, w2p);
+}
+
+function applyFromParams(pn, pp, w1n, w1p, w2n, w2p) {
+  if (pn) document.getElementById('phone-name').value = pn;
+  if (pp) document.getElementById('phone-number').value = pp;
+  const rows = document.querySelectorAll('.wa-item');
+  if (rows[0]) {
+    if (w1n) rows[0].querySelector('.wa-name').value = w1n;
+    if (w1p) rows[0].querySelector('.wa-num').value  = w1p;
+  }
+  if (rows[1]) {
+    if (w2n) rows[1].querySelector('.wa-name').value = w2n;
+    if (w2p) rows[1].querySelector('.wa-num').value  = w2p;
+  }
+}
+
+/* ── Load pre-filled values from URL params (partner side) ── */
+function loadFromURL() {
+  try {
+    const p = new URLSearchParams(window.location.search);
+    const pn  = p.get('pn'),  pp  = p.get('pp');
+    const w1n = p.get('w1n'), w1p = p.get('w1p');
+    const w2n = p.get('w2n'), w2p = p.get('w2p');
+    if (pn || pp || w1n || w1p || w2n || w2p) {
+      // Hide admin bar for partner view
+      const bar = document.querySelector('.admin-bar');
+      if (bar) bar.style.display = 'none';
+      // Apply values after DOM settles
+      setTimeout(() => applyFromParams(pn, pp, w1n, w1p, w2n, w2p), 50);
+    }
+  } catch(e) {}
+}
+
+function copyLink() {
+  const inp = document.getElementById('share-link-input');
+  inp.select();
+  try {
+    navigator.clipboard.writeText(inp.value).then(() => {
+      const btn = document.getElementById('copy-btn');
+      btn.textContent = 'Copied!';
+      btn.style.background = '#5a9e5a';
+      btn.style.color = '#fff';
+      setTimeout(() => { btn.textContent = 'Copy'; btn.style.background = 'var(--gold)'; btn.style.color = '#111'; }, 2000);
+    });
+  } catch(e) {
+    document.execCommand('copy');
+    toast('Link copied to clipboard ✓');
+  }
 }
 
 function saveEmail() {
   const e = g('notif-email');
   if (e) { notifEmail = e; toast('Notification email saved ✓'); }
   closeOv('modal-email');
-}
-
-function saveEJSConfig() {
-  const pk = g('ejs-pubkey'), sid = g('ejs-service'), tid = g('ejs-template');
-  if (!pk || !sid || !tid) { toast('Please fill all three fields'); return; }
-  ejsConfig = { publicKey: pk, serviceId: sid, templateId: tid };
-  emailjs.init({ publicKey: pk });
-  try { sessionStorage.setItem('ejs_cfg', JSON.stringify(ejsConfig)); } catch(e) {}
-  closeOv('modal-setup');
-  toast('EmailJS configured ✓ — emails will now be sent automatically');
 }
 
 function clearAll() {
@@ -683,7 +760,7 @@ function addOurWA() {
     <div class="seg-icon-cell" style="background:var(--cell-bg);border:1.5px solid var(--inp-border);border-right:none">${WA_SVG}</div>
     <input type="text" class="seg-name-inp wa-name" placeholder="Name">
     <div class="seg-arr" style="background:var(--cell-bg);border-top:1.5px solid var(--inp-border);border-bottom:1.5px solid var(--inp-border)">›</div>
-    <input type="tel" class="seg-num-inp no-rr wa-num" placeholder="+country code number">
+    <input type="tel" class="seg-num-inp no-rr wa-num" placeholder="+country code - number">
     <div class="seg-lock-cell" onclick="toggleLock(this)">${LOCK_SVG}</div>
     <button class="btn-remove" onclick="this.closest('.wa-item').remove()" title="Remove">×</button>`;
   list.appendChild(d); d.style.animation = 'fadeUp .25s ease'; d.querySelector('.wa-name').focus();
@@ -696,7 +773,7 @@ function addYourWA() {
     <div class="seg-icon-cell" style="background:var(--cell-bg);border:1.5px solid var(--inp-border);border-right:none">${WA_SVG}</div>
     <input type="text" class="seg-name-inp cust-name" placeholder="Name">
     <div class="seg-arr" style="background:var(--cell-bg);border-top:1.5px solid var(--inp-border);border-bottom:1.5px solid var(--inp-border)">›</div>
-    <input type="tel" class="seg-num-inp cust-num" placeholder="+country code number">
+    <input type="tel" class="seg-num-inp cust-num" placeholder="+country code - number">
     <button class="btn-remove" onclick="this.closest('.cust-wa-item').remove()" title="Remove">×</button>`;
   list.appendChild(d); d.style.animation = 'fadeUp .25s ease'; d.querySelector('.cust-name').focus();
 }
@@ -813,6 +890,19 @@ async function submitForm() {
     return;
   }
 
+  // Validate mandatory emergency WA field
+  const custWAItems = document.querySelectorAll('.cust-wa-item');
+  const hasEmergencyWA = Array.from(custWAItems).some(r => {
+    const num = r.querySelector('.cust-num')?.value?.trim();
+    return num && num.length > 2;
+  });
+  if (!hasEmergencyWA) {
+    toast('⚠ Please enter at least one Emergency WhatsApp number');
+    document.getElementById('your-wa-list').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    document.querySelector('.cust-num')?.focus();
+    return;
+  }
+
   const btn = document.getElementById('submit-btn');
   btn.disabled = true;
   btn.innerHTML = '<span class="spinner"></span> Submitting…';
@@ -824,58 +914,70 @@ async function submitForm() {
     openOv('overlay-success');
   }, 400);
 
-  // ── Event 2: Send email ──
-  if (ejsConfig.publicKey && ejsConfig.serviceId && ejsConfig.templateId) {
-    // EmailJS configured — send via API
-    try {
-      const plainText = [
-        'ONBOARDING SUBMISSION — ' + new Date().toLocaleString(),
-        '', 'Official Email: ' + data.officialEmail,
-        'Phone Name: ' + data.phoneName,
-        'Phone (Verification): ' + data.phoneNumber,
-        '', 'Our WhatsApp:',
-        ...data.ourWA.map(w => '  ' + w.name + ': ' + w.number),
-        '', 'Customer WhatsApp:',
-        ...data.yourWA.map(w => '  ' + w.name + ': ' + w.number),
-        '', 'Platform Credentials:',
-        ...data.platforms.map(p => '  ' + p.platform + ' | User: ' + p.username + ' | Pwd: ' + p.password)
-      ].join('\n');
-
-      await emailjs.send(ejsConfig.serviceId, ejsConfig.templateId, {
-        to_email: notifEmail,
-        subject:  'Onboarding Submission — ' + data.officialEmail,
-        message:  plainText
-      });
-      document.getElementById('success-note').textContent = '✓ Email sent to ' + notifEmail;
-    } catch (err) {
-      console.error('EmailJS error:', err);
-      document.getElementById('success-note').textContent = '⚠ Email delivery failed. Check EmailJS config.';
-    }
-  } else {
-    // Fallback: open mailto (works when opened in a real browser, not sandboxed preview)
+  // ── Event 2: Send email via mailto with clean ASCII table ──
+  {
     const subj = encodeURIComponent('Onboarding Submission — ' + data.officialEmail);
-    const body = encodeURIComponent([
-      'ONBOARDING SUBMISSION', 'Date: ' + new Date().toLocaleString(), '',
-      'Official Email: ' + data.officialEmail,
-      'Phone Name: ' + data.phoneName,
-      'Phone (Verification): ' + data.phoneNumber,
-      '', 'Our WhatsApp:',
-      ...(data.ourWA.length ? data.ourWA.map(w => '  ' + w.name + ': ' + w.number) : ['  (none)']),
-      '', 'Customer WhatsApp:',
-      ...(data.yourWA.length ? data.yourWA.map(w => '  ' + w.name + ': ' + w.number) : ['  (none)']),
-      '', 'Platform Credentials:',
-      ...(data.platforms.length ? data.platforms.map(p => '  ' + p.platform + ' | ' + p.username + ' / ' + p.password) : ['  (none)'])
-    ].join('\n'));
 
-    // Open in a new window to avoid blocked-content error in iframes
+    // ASCII table helpers
+    function pr(s, n) { s = String(s||''); return s.length >= n ? s.slice(0,n) : s + ' '.repeat(n - s.length); }
+    function hr2(a, b)       { return '+' + '-'.repeat(a+2) + '+' + '-'.repeat(b+2) + '+'; }
+    function hr3(a, b, c)    { return '+' + '-'.repeat(a+2) + '+' + '-'.repeat(b+2) + '+' + '-'.repeat(c+2) + '+'; }
+    function row2(x, y, a, b){ return '| ' + pr(x,a) + ' | ' + pr(y,b) + ' |'; }
+    function row3(x,y,z,a,b,c){return '| ' + pr(x,a) + ' | ' + pr(y,b) + ' | ' + pr(z,c) + ' |'; }
+    function sec(title, w) {
+      const bar = '=' .repeat(w);
+      return '+' + bar + '+\n| ' + pr(' ' + title, w-1) + ' |\n+' + bar + '+';
+    }
+
+    const L = [];
+
+    L.push('STRATEGY CUES — ONBOARDING FORM SUBMISSION');
+    L.push('Submitted : ' + new Date().toLocaleString());
+    L.push('');
+
+    // General Info
+    const c1=28, c2=42;
+    L.push(sec('GENERAL INFORMATION', c1+c2+5));
+    L.push(row2('Field', 'Value', c1, c2));
+    L.push(hr2(c1, c2));
+    L.push(row2('Official Email ID',       data.officialEmail, c1, c2)); L.push(hr2(c1,c2));
+    L.push(row2('Phone Contact Name',      data.phoneName,     c1, c2)); L.push(hr2(c1,c2));
+    L.push(row2('Phone No. (Verification)',data.phoneNumber,   c1, c2)); L.push(hr2(c1,c2));
+    L.push('');
+
+    // Our WhatsApp
+    const w1=22, w2=30;
+    L.push(sec('OUR WHATSAPP NUMBERS FOR COMMUNICATION', w1+w2+5));
+    L.push(row2('Name', 'Number', w1, w2)); L.push(hr2(w1,w2));
+    if (data.ourWA.length) {
+      data.ourWA.forEach(w => { L.push(row2(w.name, w.number, w1, w2)); L.push(hr2(w1,w2)); });
+    } else { L.push(row2('(none)', '', w1, w2)); L.push(hr2(w1,w2)); }
+    L.push('');
+
+    // Emergency WhatsApp
+    L.push(sec('YOUR EMERGENCY WHATSAPP NUMBERS', w1+w2+5));
+    L.push(row2('Name', 'Number', w1, w2)); L.push(hr2(w1,w2));
+    if (data.yourWA.length) {
+      data.yourWA.forEach(w => { L.push(row2(w.name, w.number, w1, w2)); L.push(hr2(w1,w2)); });
+    } else { L.push(row2('(none)', '', w1, w2)); L.push(hr2(w1,w2)); }
+    L.push('');
+
+    // Platform Credentials
+    const p1=18, p2=22, p3=22;
+    L.push(sec('PLATFORM LOGIN CREDENTIALS', p1+p2+p3+8));
+    L.push(row3('Platform', 'Username', 'Password', p1, p2, p3)); L.push(hr3(p1,p2,p3));
+    if (data.platforms.length) {
+      data.platforms.forEach(p => { L.push(row3(p.platform, p.username, p.password, p1, p2, p3)); L.push(hr3(p1,p2,p3)); });
+    } else { L.push(row3('(none)', '', '', p1, p2, p3)); L.push(hr3(p1,p2,p3)); }
+
+    const body = encodeURIComponent(L.join('\n'));
     const mailLink = 'mailto:' + notifEmail + '?subject=' + subj + '&body=' + body;
     const win = window.open(mailLink, '_blank');
     if (!win) {
-      // If popup blocked, create a visible link
       document.getElementById('success-note').innerHTML =
-        '📧 <a href="' + mailLink + '" style="color:var(--gold)">Click here to open your email client</a> and send to ' + notifEmail + '<br><small style="color:var(--text3)">Or set up EmailJS via "Email API Setup" for automatic delivery.</small>';
+        '📧 <a href="' + mailLink + '" style="color:var(--gold)">Click here to open your email client</a> — all details pre-filled for ' + notifEmail;
     } else {
-      document.getElementById('success-note').textContent = 'Your email client has been opened with all details pre-filled for ' + notifEmail;
+      document.getElementById('success-note').textContent = '✓ Email client opened — details pre-filled for ' + notifEmail;
     }
   }
 
@@ -892,6 +994,9 @@ function toast(msg) {
   document.body.appendChild(el);
   setTimeout(() => el.remove(), 2800);
 }
+
+/* ── Auto-load from URL on page load ── */
+document.addEventListener('DOMContentLoaded', loadFromURL);
 </script>
 </body>
 </html>
