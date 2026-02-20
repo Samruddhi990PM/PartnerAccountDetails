@@ -1,7 +1,7 @@
 // api/send-email.js
 // Vercel Serverless Function — receives form data, sends email via Gmail SMTP
 
-const nodemailer = require('nodemailer');
+import nodemailer from 'nodemailer';
 
 // Helper: pad string to fixed width for ASCII table
 function pr(s, n) {
@@ -163,33 +163,55 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: 'Official email is required' });
     }
 
+    // Validate env vars are present
+    if (!process.env.GMAIL_USER || !process.env.GMAIL_APP_PASS) {
+      console.error('Missing env vars — GMAIL_USER:', !!process.env.GMAIL_USER, 'GMAIL_APP_PASS:', !!process.env.GMAIL_APP_PASS);
+      return res.status(500).json({ error: 'Server misconfiguration: email credentials not set in environment variables' });
+    }
+
+    console.log('Sending email via:', process.env.GMAIL_USER);
+
     // Create Gmail SMTP transporter
-    // Credentials come from Vercel Environment Variables (never hardcoded)
     const transporter = nodemailer.createTransport({
       host: 'smtp.gmail.com',
       port: 587,
-      secure: false, // TLS
+      secure: false, // STARTTLS
       auth: {
-        user: process.env.GMAIL_USER,     // e.g. yourname@gmail.com
-        pass: process.env.GMAIL_APP_PASS  // 16-char App Password from Google
+        user: process.env.GMAIL_USER,
+        pass: process.env.GMAIL_APP_PASS.replace(/\s/g, '') // strip spaces just in case
+      },
+      tls: {
+        rejectUnauthorized: false
       }
     });
 
-    // Recipient — can be overridden per-request if needed
+    // Verify SMTP connection before sending
+    await transporter.verify();
+    console.log('SMTP connection verified');
+
+    // Recipient
     const toEmail = data.notifEmail || process.env.DEFAULT_TO_EMAIL || 'samruddhi.waghchaure@strategycues.com';
+    console.log('Sending to:', toEmail);
 
     await transporter.sendMail({
       from: `"Strategy Cues Onboarding" <${process.env.GMAIL_USER}>`,
       to: toEmail,
       subject: `Onboarding Submission — ${data.officialEmail}`,
-      text: buildPlainTable(data),   // plain-text fallback (ASCII table)
-      html: buildHTMLTable(data)     // rich HTML version
+      text: buildPlainTable(data),
+      html: buildHTMLTable(data)
     });
 
+    console.log('Email sent successfully to:', toEmail);
     return res.status(200).json({ success: true, message: 'Email sent successfully' });
 
   } catch (err) {
-    console.error('Email send error:', err);
-    return res.status(500).json({ error: 'Failed to send email', detail: err.message });
+    console.error('Email send error — code:', err.code);
+    console.error('Email send error — message:', err.message);
+    console.error('Full error:', JSON.stringify(err, Object.getOwnPropertyNames(err)));
+    return res.status(500).json({
+      error: 'Failed to send email',
+      code: err.code || 'UNKNOWN',
+      detail: err.message
+    });
   }
 }
