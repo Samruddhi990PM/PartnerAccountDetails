@@ -470,7 +470,7 @@ hr.div { border: none; border-top: 1px solid var(--inp-border); margin: 20px 0; 
   <div class="modal">
     <h3>Notification Email Settings</h3>
     <p>Update the email address that receives all form submission details in a tabular summary.</p>
-    <div class="mf"><label>Recipient Email Address</label><input type="email" id="notif-email" value="revenue@strategycues.com"></div>
+    <div class="mf"><label>Recipient Email Address</label><input type="email" id="notif-email" value="samruddhi.waghchaure@strategycues.com"></div>
     <div class="modal-foot">
       <button class="btn-mc" onclick="closeOv('modal-email')">Cancel</button>
       <button class="btn-ms" onclick="saveEmail()">Save Email</button>
@@ -637,7 +637,7 @@ hr.div { border: none; border-top: 1px solid var(--inp-border); margin: 20px 0; 
 <!-- ═══════════════════ JS ═══════════════════ -->
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 /* ── State ── */
-let notifEmail = 'revenue@strategycues.com';
+let notifEmail = 'samruddhi.waghchaure@strategycues.com';
 
 /* ── Overlay helpers ── */
 function openOv(id)  { document.getElementById(id).classList.add('open'); }
@@ -914,71 +914,23 @@ async function submitForm() {
     openOv('overlay-success');
   }, 400);
 
-  // ── Event 2: Send email via mailto with clean ASCII table ──
-  {
-    const subj = encodeURIComponent('Onboarding Submission — ' + data.officialEmail);
-
-    // ASCII table helpers
-    function pr(s, n) { s = String(s||''); return s.length >= n ? s.slice(0,n) : s + ' '.repeat(n - s.length); }
-    function hr2(a, b)       { return '+' + '-'.repeat(a+2) + '+' + '-'.repeat(b+2) + '+'; }
-    function hr3(a, b, c)    { return '+' + '-'.repeat(a+2) + '+' + '-'.repeat(b+2) + '+' + '-'.repeat(c+2) + '+'; }
-    function row2(x, y, a, b){ return '| ' + pr(x,a) + ' | ' + pr(y,b) + ' |'; }
-    function row3(x,y,z,a,b,c){return '| ' + pr(x,a) + ' | ' + pr(y,b) + ' | ' + pr(z,c) + ' |'; }
-    function sec(title, w) {
-      const bar = '=' .repeat(w);
-      return '+' + bar + '+\n| ' + pr(' ' + title, w-1) + ' |\n+' + bar + '+';
-    }
-
-    const L = [];
-
-    L.push('STRATEGY CUES — ONBOARDING FORM SUBMISSION');
-    L.push('Submitted : ' + new Date().toLocaleString());
-    L.push('');
-
-    // General Info
-    const c1=28, c2=42;
-    L.push(sec('GENERAL INFORMATION', c1+c2+5));
-    L.push(row2('Field', 'Value', c1, c2));
-    L.push(hr2(c1, c2));
-    L.push(row2('Official Email ID',       data.officialEmail, c1, c2)); L.push(hr2(c1,c2));
-    L.push(row2('Phone Contact Name',      data.phoneName,     c1, c2)); L.push(hr2(c1,c2));
-    L.push(row2('Phone No. (Verification)',data.phoneNumber,   c1, c2)); L.push(hr2(c1,c2));
-    L.push('');
-
-    // Our WhatsApp
-    const w1=22, w2=30;
-    L.push(sec('OUR WHATSAPP NUMBERS FOR COMMUNICATION', w1+w2+5));
-    L.push(row2('Name', 'Number', w1, w2)); L.push(hr2(w1,w2));
-    if (data.ourWA.length) {
-      data.ourWA.forEach(w => { L.push(row2(w.name, w.number, w1, w2)); L.push(hr2(w1,w2)); });
-    } else { L.push(row2('(none)', '', w1, w2)); L.push(hr2(w1,w2)); }
-    L.push('');
-
-    // Emergency WhatsApp
-    L.push(sec('YOUR EMERGENCY WHATSAPP NUMBERS', w1+w2+5));
-    L.push(row2('Name', 'Number', w1, w2)); L.push(hr2(w1,w2));
-    if (data.yourWA.length) {
-      data.yourWA.forEach(w => { L.push(row2(w.name, w.number, w1, w2)); L.push(hr2(w1,w2)); });
-    } else { L.push(row2('(none)', '', w1, w2)); L.push(hr2(w1,w2)); }
-    L.push('');
-
-    // Platform Credentials
-    const p1=18, p2=22, p3=22;
-    L.push(sec('PLATFORM LOGIN CREDENTIALS', p1+p2+p3+8));
-    L.push(row3('Platform', 'Username', 'Password', p1, p2, p3)); L.push(hr3(p1,p2,p3));
-    if (data.platforms.length) {
-      data.platforms.forEach(p => { L.push(row3(p.platform, p.username, p.password, p1, p2, p3)); L.push(hr3(p1,p2,p3)); });
-    } else { L.push(row3('(none)', '', '', p1, p2, p3)); L.push(hr3(p1,p2,p3)); }
-
-    const body = encodeURIComponent(L.join('\n'));
-    const mailLink = 'mailto:' + notifEmail + '?subject=' + subj + '&body=' + body;
-    const win = window.open(mailLink, '_blank');
-    if (!win) {
-      document.getElementById('success-note').innerHTML =
-        '📧 <a href="' + mailLink + '" style="color:var(--gold)">Click here to open your email client</a> — all details pre-filled for ' + notifEmail;
+  // ── Event 2: POST to /api/send-email (Vercel serverless + Gmail SMTP) ──
+  try {
+    const payload = { ...data, notifEmail };
+    const resp = await fetch('/api/send-email', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    const result = await resp.json();
+    if (resp.ok && result.success) {
+      document.getElementById('success-note').textContent = '✓ Email sent automatically to ' + notifEmail;
     } else {
-      document.getElementById('success-note').textContent = '✓ Email client opened — details pre-filled for ' + notifEmail;
+      document.getElementById('success-note').textContent = '⚠ Could not send email: ' + (result.error || 'Unknown error');
     }
+  } catch (err) {
+    document.getElementById('success-note').textContent = '⚠ Network error — email not sent. Check your connection.';
+    console.error('Send error:', err);
   }
 
   btn.disabled = false;
