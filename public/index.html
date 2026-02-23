@@ -4,51 +4,50 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Account Setup — Strategy Cues</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
 <style>
 /* ═══════════════════════════════════════════
    STRATEGY CUES — BLACK & GOLD THEME
 ═══════════════════════════════════════════ */
 :root {
-  /* Backgrounds */
-  --bg:        #111111;
-  --bg2:       #1a1a1a;
-  --bg3:       #222222;
+  /* Reference theme — Strategy Cues brand */
+  --yellow:       #f5c800;
+  --yellow-hover: #ffd700;
+  --yellow-glow:  rgba(245,200,0,0.40);
+  --yellow-soft:  rgba(245,200,0,0.10);
+  --charcoal:     #1a1a1a;
+  --charcoal-80:  #2e2e2e;
+  --charcoal-60:  #555555;
+  --charcoal-30:  #aaaaaa;
 
-  /* Cards */
-  --card:      #1e1e1e;
-  --card2:     #252525;
-  --card3:     #2a2a2a;
-
-  /* Gold palette */
-  --gold:      #d4a843;
-  --gold-h:    #c09030;
-  --gold-dim:  #8a6a20;
-  --gold-pale: #f5e8c0;
-  --gold-bg:   rgba(212,168,67,.08);
-  --gold-border: rgba(212,168,67,.25);
-
-  /* Text */
-  --text:      #f0ead8;
-  --text2:     #b8b0a0;
-  --text3:     #6a6050;
-
-  /* Inputs */
-  --inp-bg:    #2a2a2a;
-  --inp-border:#3a3530;
-  --inp-focus: var(--gold);
-
-  /* Accent cells */
-  --cell-bg:   #242424;
-
-  /* Status */
-  --red:       #e05040;
-  --wa:        #25a244;
+  /* Map to existing var names used throughout */
+  --bg:          #f2f0e8;
+  --bg2:         #e8e6de;
+  --bg3:         #dddbd2;
+  --card:        #ffffff;
+  --card2:       #fafaf7;
+  --card3:       #f2f0e8;
+  --gold:        #c49a00;
+  --gold-h:      #a07e00;
+  --gold-dim:    #c49a00;
+  --gold-pale:   #5a4400;
+  --gold-bg:     rgba(245,200,0,0.08);
+  --gold-border: rgba(245,200,0,0.35);
+  --text:        #1a1a1a;
+  --text2:       #555555;
+  --text3:       #aaaaaa;
+  --inp-bg:      #f2f0e8;
+  --inp-border:  #dddbd2;
+  --inp-focus:   var(--charcoal);
+  --cell-bg:     #f2f0e8;
+  --red:         #c0392b;
+  --wa:          #25a244;
 
   /* Shadows */
-  --sh-sm: 0 1px 4px rgba(0,0,0,.4);
-  --sh-md: 0 4px 20px rgba(0,0,0,.5);
-  --sh-lg: 0 16px 48px rgba(0,0,0,.65);
+  --sh-sm: 0 1px 4px rgba(0,0,0,.08);
+  --sh-md: 0 4px 20px rgba(0,0,0,.10);
+  --sh-lg: 0 16px 48px rgba(0,0,0,.18);
 
   /* Radii */
   --r:  12px;
@@ -62,8 +61,12 @@ body {
   font-family: 'DM Sans', sans-serif;
   background: var(--bg);
   background-image:
-    radial-gradient(ellipse 60% 35% at 85% 0%, rgba(212,168,67,.07) 0%, transparent 55%),
-    radial-gradient(ellipse 40% 50% at 15% 100%, rgba(212,168,67,.04) 0%, transparent 55%);
+    repeating-linear-gradient(
+      -45deg,
+      transparent, transparent 18px,
+      rgba(245,200,0,0.045) 18px, rgba(245,200,0,0.045) 19px
+    ),
+    radial-gradient(ellipse 80% 50% at 50% 0%, rgba(245,200,0,0.09) 0%, transparent 60%);
   min-height: 100vh;
   padding: 48px 20px 80px;
   color: var(--text);
@@ -79,16 +82,16 @@ body {
   font-family: 'Cormorant Garamond', serif;
   font-size: .72rem; font-weight: 600;
   letter-spacing: .24em; text-transform: uppercase;
-  color: var(--gold); margin-bottom: 20px; opacity: .9;
+  color: var(--charcoal-60); margin-bottom: 20px; opacity: .9;
 }
 .brandline::before, .brandline::after {
   content: ''; flex: 1; height: 1px;
-  background: linear-gradient(90deg, transparent, var(--gold-dim), transparent);
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
 }
 
 .header h1 {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 2.4rem; font-weight: 700;
+  font-family: 'DM Serif Display', serif;
+  font-size: 2.4rem; font-weight: 400;
   color: var(--text); line-height: 1.12;
   letter-spacing: -.01em; margin-bottom: 12px;
 }
@@ -97,8 +100,8 @@ body {
 
 /* ── Admin bar ── */
 .admin-bar {
-  background: var(--gold-bg);
-  border: 1px solid var(--gold-border);
+  background: rgba(245,200,0,.06);
+  border: 1px solid rgba(245,200,0,.3);
   border-radius: var(--rs);
   padding: 12px 18px; margin-bottom: 20px;
   display: flex; align-items: center; justify-content: space-between;
@@ -119,27 +122,53 @@ body {
   font-family: 'DM Sans', sans-serif; font-weight: 600;
   cursor: pointer; transition: all .18s ease;
 }
-.btn-gold  { background: var(--gold); color: #111; font-size: .8rem; padding: 7px 15px; }
-.btn-gold:hover { background: var(--gold-h); transform: translateY(-1px); }
+.btn-gold  { background: var(--yellow); color: var(--charcoal); font-size: .8rem; padding: 7px 15px; }
+.btn-gold:hover { background: var(--yellow-hover); transform: translateY(-1px); }
 .btn-outline { background: transparent; border: 1px solid var(--gold-border); color: var(--text2); font-size: .8rem; padding: 7px 14px; }
 .btn-outline:hover { background: var(--gold-bg); border-color: var(--gold-dim); }
 .btn-dark  { background: var(--card3); color: var(--text2); font-size: .8rem; padding: 7px 14px; border: 1px solid var(--inp-border); }
 .btn-dark:hover { background: #333; color: var(--text); }
-.btn-next  { background: var(--gold); color: #111; font-size: .87rem; padding: 11px 18px; border-radius: var(--rs); white-space: nowrap; }
-.btn-next:hover { background: var(--gold-h); }
+.btn-next  { background: var(--yellow); color: var(--charcoal); font-size: .87rem; padding: 11px 18px; border-radius: var(--rs); white-space: nowrap; font-weight: 700; }
+.btn-next:hover { background: var(--yellow-hover); }
 .btn-add   { background: var(--card3); color: var(--text2); font-size: .79rem; padding: 8px 14px; border-radius: var(--rs); border: 1px solid var(--inp-border); }
 .btn-add:hover { background: var(--gold-bg); border-color: var(--gold-dim); color: var(--gold-pale); }
 .btn-submit {
-  background: var(--gold); color: #111;
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 1.1rem; font-weight: 700;
-  padding: 13px 48px; border-radius: var(--rs);
-  letter-spacing: .05em;
-  box-shadow: 0 4px 20px rgba(212,168,67,.3);
+  background: var(--yellow);
+  color: var(--charcoal);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px; font-weight: 700;
+  letter-spacing: 0.03em;
+  padding: 15px 48px; border-radius: 14px;
+  border: none; cursor: pointer;
+  position: relative; overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.25s, background 0.2s;
+  box-shadow: 0 4px 16px rgba(245,200,0,0.35);
   margin-top: 8px;
 }
-.btn-submit:hover { background: var(--gold-h); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(212,168,67,.4); }
-.btn-submit:disabled { background: var(--gold-dim); cursor: not-allowed; transform: none; box-shadow: none; }
+.btn-submit::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(
+    -45deg, transparent, transparent 7px,
+    rgba(0,0,0,0.04) 7px, rgba(0,0,0,0.04) 8px
+  );
+  border-radius: inherit; opacity: 0;
+  transition: opacity 0.25s;
+}
+.btn-submit::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(110deg, rgba(255,255,255,0.22) 0%, transparent 55%);
+  border-radius: inherit;
+}
+.btn-submit:hover:not(:disabled) {
+  background: var(--yellow-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px var(--yellow-glow), 0 0 0 6px rgba(245,200,0,0.13);
+}
+.btn-submit:hover:not(:disabled)::before { opacity: 1; }
+.btn-submit:active:not(:disabled) { transform: translateY(0); box-shadow: 0 2px 10px rgba(245,200,0,0.3); }
+.btn-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
 .btn-remove {
   background: none; border: none; color: var(--text3);
   cursor: pointer; padding: 4px 7px; font-size: 1.1rem;
@@ -149,10 +178,10 @@ body {
 
 /* ── Cards ── */
 .card {
-  background: var(--card); border-radius: var(--r);
+  background: var(--card); border-radius: 20px;
   border: 1px solid var(--inp-border);
   padding: 26px 28px; margin-bottom: 16px;
-  box-shadow: var(--sh-md);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.04), 0 12px 32px rgba(0,0,0,0.08);
   animation: fadeUp .45s ease both;
 }
 .card:nth-child(2) { animation-delay: .07s; }
@@ -164,22 +193,22 @@ body {
   margin-bottom: 18px; gap: 10px; flex-wrap: wrap;
 }
 .card-hdr h2 {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 1.18rem; font-weight: 600; color: var(--text);
-  letter-spacing: .01em;
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.2rem; font-weight: 400; color: var(--text);
+  letter-spacing: -.01em;
 }
 
 /* ── Info box ── */
 .info-box {
-  background: rgba(212,168,67,.07);
-  border: 1px solid rgba(212,168,67,.2);
+  background: rgba(196,154,42,.07);
+  border: 1px solid rgba(196,154,42,.25);
   border-radius: var(--rs); padding: 12px 16px;
   display: flex; gap: 12px; align-items: flex-start;
   margin-bottom: 18px; font-size: .84rem;
-  color: #c8b88a; line-height: 1.55;
+  color: #6b5500; line-height: 1.55;
 }
 .info-dot {
-  width: 22px; height: 22px; background: var(--gold);
+  width: 22px; height: 22px; background: var(--yellow);
   border-radius: 50%; display: flex; align-items: center;
   justify-content: center; flex-shrink: 0;
   font-size: .72rem; font-weight: 700; color: #111; margin-top: 1px;
@@ -191,47 +220,50 @@ body {
   font-size: .76rem; font-weight: 600; color: var(--text2);
   margin-bottom: 8px; text-transform: uppercase; letter-spacing: .08em;
 }
-.req { color: var(--red); }
+.req { color: var(--yellow); margin-left: 1px; }
 
 /* ── Tooltip ── */
 .tip-wrap { position: relative; display: inline-flex; align-items: center; }
 .tip-icon {
-  width: 15px; height: 15px; background: var(--gold);
+  width: 15px; height: 15px; background: var(--yellow);
   border-radius: 50%; display: inline-flex;
   align-items: center; justify-content: center;
   font-size: .6rem; font-weight: 700; color: #111;
   cursor: help; transition: background .15s;
 }
-.tip-icon:hover { background: var(--gold-h); }
+.tip-icon:hover { background: var(--yellow-hover); }
 .tip-bubble {
   display: none; position: absolute;
   bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%);
-  background: #1a1a1a; border: 1px solid var(--gold-border);
-  color: var(--text2); font-size: .77rem; font-weight: 400;
+  background: #fffef5; border: 1px solid rgba(196,154,0,0.3);
+  color: #3a3000; font-size: .77rem; font-weight: 400;
   padding: 9px 13px; border-radius: var(--rs);
   width: 230px; line-height: 1.5; z-index: 200;
-  pointer-events: none; box-shadow: var(--sh-lg);
+  pointer-events: none; box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+  text-transform: none; letter-spacing: normal;
 }
 .tip-bubble::after {
   content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
-  border: 5px solid transparent; border-top-color: var(--gold-border);
+  border: 5px solid transparent; border-top-color: rgba(196,154,0,0.3);
 }
 .tip-icon:hover + .tip-bubble { display: block; }
 
 /* ── Base inputs ── */
 input[type="text"], input[type="email"],
 input[type="tel"],  input[type="password"] {
-  font-family: 'DM Sans', sans-serif; font-size: .9rem;
-  color: var(--text); background: var(--inp-bg);
+  font-family: 'DM Sans', sans-serif; font-size: 14px;
+  color: var(--charcoal); background: var(--inp-bg);
   border: 1.5px solid var(--inp-border); outline: none;
-  transition: border-color .18s, box-shadow .18s;
+  border-radius: 10px;
+  transition: border-color .2s, box-shadow .2s, background .2s;
 }
 input[type="text"]:focus, input[type="email"]:focus,
 input[type="tel"]:focus,  input[type="password"]:focus {
-  border-color: var(--gold);
-  box-shadow: 0 0 0 3px rgba(212,168,67,.12);
+  background: #ffffff;
+  border-color: var(--charcoal);
+  box-shadow: 0 0 0 3px rgba(26,26,26,0.07);
 }
-input::placeholder { color: var(--text3); }
+input::placeholder { color: #b8b4a6; }
 
 /* ── Email row ── */
 .email-row { display: flex; gap: 12px; align-items: flex-start; }
@@ -269,7 +301,7 @@ input::placeholder { color: var(--text3); }
   padding: 0 12px; display: flex; align-items: center;
   cursor: pointer; color: var(--text3); transition: color .15s; flex-shrink: 0;
 }
-.seg-lock-cell:hover { color: var(--gold); }
+.seg-lock-cell:hover { color: var(--yellow); }
 
 .seg-row > *:first-child { border-radius: var(--rs) 0 0 var(--rs) !important; }
 .seg-row > *:last-child  { border-radius: 0 var(--rs) var(--rs) 0 !important; }
@@ -279,7 +311,7 @@ hr.div { border: none; border-top: 1px solid var(--inp-border); margin: 20px 0; 
 
 /* ── Credentials table ── */
 .cred-lbl-row {
-  display: grid; grid-template-columns: 190px 1fr 1fr 44px;
+  display: grid; grid-template-columns: 160px 1fr 1fr 1fr 44px;
   margin-bottom: 5px; padding: 0 2px;
 }
 .cred-lbl-cell {
@@ -287,15 +319,17 @@ hr.div { border: none; border-top: 1px solid var(--inp-border); margin: 20px 0; 
   text-transform: uppercase; letter-spacing: .07em; padding: 0 10px;
 }
 .cred-row {
-  display: grid; grid-template-columns: 190px 1fr 1fr 44px;
+  display: grid; grid-template-columns: 160px 1fr 1fr 1fr 44px;
   margin-bottom: 5px; border-radius: var(--rs);
-  overflow: hidden; box-shadow: var(--sh-sm);
+  overflow: visible; box-shadow: var(--sh-sm);
+  position: relative;
 }
 .cred-plat {
   background: var(--cell-bg); border: 1.5px solid var(--inp-border); border-right: none;
   padding: 10px 14px; display: flex; align-items: center; justify-content: space-between;
   font-size: .87rem; font-weight: 500; color: var(--text);
   border-radius: var(--rs) 0 0 var(--rs);
+  position: relative; z-index: 10;
 }
 .cred-plat span { color: var(--text3); font-size: .75rem; }
 .cred-plat-inp {
@@ -313,12 +347,12 @@ hr.div { border: none; border-top: 1px solid var(--inp-border); margin: 20px 0; 
   cursor: pointer; color: var(--text3); transition: color .15s;
   border-radius: 0 var(--rs) var(--rs) 0;
 }
-.cred-lock:hover { color: var(--gold); }
+.cred-lock:hover { color: var(--yellow); }
 
 /* ── Modal / overlay ── */
 .overlay {
   display: none; position: fixed; inset: 0;
-  background: rgba(0,0,0,.82); backdrop-filter: blur(5px);
+  background: rgba(0,0,0,.55); backdrop-filter: blur(6px);
   z-index: 1000; align-items: center; justify-content: center; padding: 20px;
 }
 .overlay.open { display: flex; }
@@ -347,29 +381,29 @@ hr.div { border: none; border-top: 1px solid var(--inp-border); margin: 20px 0; 
 }
 .btn-mc:hover { background: var(--card3); }
 .btn-ms {
-  background: var(--gold); color: #111; border: none;
+  background: var(--yellow); color: var(--charcoal); border: none;
   border-radius: var(--rs); padding: 9px 22px;
   font-family: 'DM Sans', sans-serif; font-size: .86rem; font-weight: 600;
   cursor: pointer; transition: all .15s;
 }
-.btn-ms:hover { background: var(--gold-h); }
+.btn-ms:hover { background: var(--yellow-hover); }
 
 /* ── Success card ── */
 .success-card {
-  background: var(--card); border: 1px solid var(--inp-border);
+  background: #ffffff; border: 1px solid #e0d8c8;
   border-radius: var(--r); padding: 44px 36px; text-align: center;
   max-width: 460px; width: 100%;
   box-shadow: var(--sh-lg); animation: scaleIn .28s ease;
 }
 .success-ring {
   width: 70px; height: 70px;
-  background: linear-gradient(135deg, var(--gold), var(--gold-h));
+  background: var(--yellow-soft); border: 2px solid rgba(245,200,0,0.35);
   border-radius: 50%; display: flex; align-items: center; justify-content: center;
-  margin: 0 auto 22px; font-size: 2rem; color: #111;
+  margin: 0 auto 22px; font-size: 2rem; color: var(--charcoal);
 }
 .success-card h2 {
-  font-family: 'Cormorant Garamond', serif; font-size: 1.5rem;
-  color: var(--text); margin-bottom: 12px;
+  font-family: 'DM Serif Display', serif; font-size: 1.5rem;
+  color: var(--charcoal); margin-bottom: 12px;
 }
 .success-card p { color: var(--text2); font-size: .91rem; line-height: 1.65; margin-bottom: 8px; }
 .success-note { font-size: .78rem !important; color: var(--text3) !important; margin-bottom: 24px !important; }
@@ -377,7 +411,7 @@ hr.div { border: none; border-top: 1px solid var(--inp-border); margin: 20px 0; 
 /* ── Spinner ── */
 .spinner {
   display: inline-block; width: 14px; height: 14px;
-  border: 2px solid rgba(17,17,17,.3); border-top-color: #111;
+  border: 2px solid rgba(26,26,26,.2); border-top-color: var(--charcoal);
   border-radius: 50%; animation: spin .6s linear infinite;
 }
 @keyframes spin { to { transform: rotate(360deg); } }
@@ -385,8 +419,8 @@ hr.div { border: none; border-top: 1px solid var(--inp-border); margin: 20px 0; 
 /* ── Toast flash ── */
 .flash {
   position: fixed; bottom: 26px; left: 50%; transform: translateX(-50%);
-  background: var(--card3); border: 1px solid var(--inp-border);
-  color: var(--text); padding: 11px 24px; border-radius: var(--rs);
+  background: #1a1a1a; border: 1px solid #333;
+  color: #f0ead8; padding: 11px 24px; border-radius: var(--rs);
   font-size: .85rem; font-weight: 500; z-index: 9999;
   box-shadow: var(--sh-md); animation: fadeUp .3s ease;
   white-space: nowrap;
@@ -401,7 +435,7 @@ hr.div { border: none; border-top: 1px solid var(--inp-border); margin: 20px 0; 
 @media (max-width: 620px) {
   .header h1 { font-size: 1.8rem; }
   .card { padding: 20px 16px; }
-  .cred-lbl-row, .cred-row { grid-template-columns: 1fr 1fr 44px; }
+  .cred-lbl-row, .cred-row { grid-template-columns: 1fr 1fr 1fr 44px; }
   .cred-plat, .cred-plat-inp { display: none; }
   .email-row { flex-direction: column; }
   .admin-bar { flex-direction: column; align-items: flex-start; }
@@ -415,23 +449,66 @@ hr.div { border: none; border-top: 1px solid var(--inp-border); margin: 20px 0; 
 
 <!-- ═══ PRE-FILL MODAL ═══ -->
 <div class="overlay" id="modal-prefill">
-  <div class="modal" style="max-width:540px">
-    <h3>Pre-fill Contact Information</h3>
-    <p>Enter the contact details you want pre-filled for the partner. Click <strong style="color:var(--gold)">Save &amp; Generate Link</strong> — copy the link and share it. When the partner opens it, these fields are pre-populated and fully editable.</p>
-    <div style="background:rgba(212,168,67,.06);border:1px solid rgba(212,168,67,.18);border-radius:var(--rs);padding:10px 14px;margin-bottom:14px;font-size:.76rem;color:#c8a860;font-weight:600;letter-spacing:.05em;text-transform:uppercase">Phone for Verification</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px">
+  <div class="modal" style="max-width:600px;max-height:90vh;overflow-y:auto">
+    <h3>Pre-fill &amp; Generate Shareable Link</h3>
+    <p>Fill in all the values you want pre-populated for the partner. Click <strong style="color:var(--gold)">Save &amp; Generate Link</strong> to get a shareable URL.</p>
+
+    <div style="background:rgba(245,200,0,.07);border:1px solid rgba(245,200,0,.25);border-radius:var(--rs);padding:9px 13px;margin-bottom:12px;font-size:.72rem;color:#7a6000;font-weight:700;letter-spacing:.07em;text-transform:uppercase">Our Verification Number</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px">
       <div class="mf" style="margin:0"><label>Name</label><input type="text" id="pre-pname" placeholder="e.g. Tejas"></div>
       <div class="mf" style="margin:0"><label>Phone Number</label><input type="tel" id="pre-pnum" placeholder="e.g. +971 528771983"></div>
     </div>
-    <div style="background:rgba(212,168,67,.06);border:1px solid rgba(212,168,67,.18);border-radius:var(--rs);padding:10px 14px;margin-bottom:14px;font-size:.76rem;color:#c8a860;font-weight:600;letter-spacing:.05em;text-transform:uppercase">Our WhatsApp Numbers</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
+
+    <div style="background:rgba(245,200,0,.07);border:1px solid rgba(245,200,0,.25);border-radius:var(--rs);padding:9px 13px;margin-bottom:12px;font-size:.72rem;color:#7a6000;font-weight:700;letter-spacing:.07em;text-transform:uppercase">Our WhatsApp Numbers</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px">
       <div class="mf" style="margin:0"><label>Contact 1 — Name</label><input type="text" id="pre-w1name" placeholder="e.g. Devina"></div>
       <div class="mf" style="margin:0"><label>Contact 1 — Number</label><input type="tel" id="pre-w1num" placeholder="e.g. +91 8899078882"></div>
     </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px">
       <div class="mf" style="margin:0"><label>Contact 2 — Name</label><input type="text" id="pre-w2name" placeholder="e.g. Tejas"></div>
       <div class="mf" style="margin:0"><label>Contact 2 — Number</label><input type="tel" id="pre-w2num" placeholder="e.g. +971 528771983"></div>
     </div>
+
+    <div style="background:rgba(245,200,0,.07);border:1px solid rgba(245,200,0,.25);border-radius:var(--rs);padding:9px 13px;margin-bottom:12px;font-size:.72rem;color:#7a6000;font-weight:700;letter-spacing:.07em;text-transform:uppercase">Platform Credentials</div>
+    <div id="pre-platforms">
+      <div style="display:grid;grid-template-columns:120px 1fr 1fr 1fr;gap:6px;margin-bottom:6px">
+        <div style="font-size:.7rem;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;padding:0 2px">Platform</div>
+        <div style="font-size:.7rem;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.06em">Username</div>
+        <div style="font-size:.7rem;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.06em">Password</div>
+        <div style="font-size:.7rem;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.06em">OTP Goes To</div>
+      </div>
+      <div class="pre-plat-row" style="display:grid;grid-template-columns:120px 1fr 1fr 1fr;gap:6px;margin-bottom:6px">
+        <div style="font-size:.82rem;font-weight:600;color:var(--text);padding:9px 0;display:flex;align-items:center">Pricelabs</div>
+        <input type="text" class="pre-u" placeholder="Username" style="border-radius:var(--rs);padding:8px 10px">
+        <input type="password" class="pre-p" placeholder="Password" style="border-radius:var(--rs);padding:8px 10px">
+        <input type="text" class="pre-o" placeholder="Name / Number" style="border-radius:var(--rs);padding:8px 10px">
+      </div>
+      <div class="pre-plat-row" style="display:grid;grid-template-columns:120px 1fr 1fr 1fr;gap:6px;margin-bottom:6px">
+        <div style="font-size:.82rem;font-weight:600;color:var(--text);padding:9px 0;display:flex;align-items:center">Booking.com</div>
+        <input type="text" class="pre-u" placeholder="Username" style="border-radius:var(--rs);padding:8px 10px">
+        <input type="password" class="pre-p" placeholder="Password" style="border-radius:var(--rs);padding:8px 10px">
+        <input type="text" class="pre-o" placeholder="Name / Number" style="border-radius:var(--rs);padding:8px 10px">
+      </div>
+      <div class="pre-plat-row" style="display:grid;grid-template-columns:120px 1fr 1fr 1fr;gap:6px;margin-bottom:6px">
+        <div style="font-size:.82rem;font-weight:600;color:var(--text);padding:9px 0;display:flex;align-items:center">PMS</div>
+        <input type="text" class="pre-u" placeholder="Username" style="border-radius:var(--rs);padding:8px 10px">
+        <input type="password" class="pre-p" placeholder="Password" style="border-radius:var(--rs);padding:8px 10px">
+        <input type="text" class="pre-o" placeholder="Name / Number" style="border-radius:var(--rs);padding:8px 10px">
+      </div>
+      <div class="pre-plat-row" style="display:grid;grid-template-columns:120px 1fr 1fr 1fr;gap:6px;margin-bottom:6px">
+        <div style="font-size:.82rem;font-weight:600;color:var(--text);padding:9px 0;display:flex;align-items:center">Expedia</div>
+        <input type="text" class="pre-u" placeholder="Username" style="border-radius:var(--rs);padding:8px 10px">
+        <input type="password" class="pre-p" placeholder="Password" style="border-radius:var(--rs);padding:8px 10px">
+        <input type="text" class="pre-o" placeholder="Name / Number" style="border-radius:var(--rs);padding:8px 10px">
+      </div>
+      <div class="pre-plat-row" style="display:grid;grid-template-columns:120px 1fr 1fr 1fr;gap:6px;margin-bottom:6px">
+        <div style="font-size:.82rem;font-weight:600;color:var(--text);padding:9px 0;display:flex;align-items:center">VRBO</div>
+        <input type="text" class="pre-u" placeholder="Username" style="border-radius:var(--rs);padding:8px 10px">
+        <input type="password" class="pre-p" placeholder="Password" style="border-radius:var(--rs);padding:8px 10px">
+        <input type="text" class="pre-o" placeholder="Name / Number" style="border-radius:var(--rs);padding:8px 10px">
+      </div>
+    </div>
+
     <div class="modal-foot" style="flex-wrap:wrap;gap:8px;margin-top:22px">
       <button class="btn-mc" onclick="closeOv('modal-prefill')">Cancel</button>
       <button class="btn-mc" style="border-color:var(--gold-dim);color:var(--gold)" onclick="applyPrefill()">Apply to page only</button>
@@ -518,76 +595,74 @@ hr.div { border: none; border-top: 1px solid var(--inp-border); margin: 20px 0; 
     </div>
   </div>
 
-  <!-- ── Card 1: Official Email ── -->
-  <div class="card">
-    <div class="card-hdr"><h2>Official Email ID for Onboarding</h2></div>
-    <div class="info-box">
-      <div class="info-dot">i</div>
-      <span>Please create an official email ID within your organization's domain and provide it below for seamless onboarding.</span>
-    </div>
-    <div class="lbl">
-      Official Email ID <span class="req">*</span>
-      <span class="tip-wrap" style="margin-left:2px">
-        <span class="tip-icon">i</span>
-        <span class="tip-bubble">Use your organization's domain email (e.g. <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="e59c8a90a59c8a9097868a8895848b9ccb868a88">[email&#160;protected]</a>). Personal emails like Gmail are not accepted.</span>
-      </span>
-    </div>
-    <div class="email-row">
-      <input type="email" id="official-email" placeholder="example@yourcompany.com">
-      <button class="btn btn-next" onclick="document.getElementById('section-contact').scrollIntoView({behavior:'smooth',block:'start'})">
-        Next
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-      </button>
-    </div>
-  </div>
-
-  <!-- ── Card 2: Contact Information ── -->
+  <!-- ── Card 1: Our Contact Information (admin pre-fills) ── -->
   <div class="card" id="section-contact">
-    <div class="card-hdr"><h2>Contact Information</h2></div>
+    <div class="card-hdr">
+      <h2>Our Contact Information</h2>
+      <span style="font-size:.75rem;color:var(--charcoal-30);font-weight:400">Pre-filled by admin</span>
+    </div>
 
-    <!-- Phone for Verification -->
+    <!-- Our number to enroll for verification -->
     <div class="lbl">
-      Phone Number for Verification Codes <span class="req">*</span>
+      Our Number to Enroll for Verification Codes
       <span class="tip-wrap" style="margin-left:2px">
         <span class="tip-icon">i</span>
         <span class="tip-bubble">Please register this phone number for email verifications on your platform.</span>
       </span>
     </div>
-    <div class="seg-row">
-      <div class="seg-icon-cell">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6a6050" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 014.9 13.6 19.79 19.79 0 011.87 5.09a2 2 0 012-2.18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 10.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 17z"/></svg>
-      </div>
-      <input type="text" class="seg-name-inp" id="phone-name" placeholder="Name" value="Tejas">
+    <div class="seg-row" style="margin-bottom:18px">
+      <div class="seg-icon-cell"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6a6050" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 014.9 13.6 19.79 19.79 0 011.87 5.09a2 2 0 012-2.18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 10.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 17z"/></svg></div>
+      <input type="text" class="seg-name-inp" id="phone-name" placeholder="Name">
       <div class="seg-arr">›</div>
       <input type="tel" class="seg-num-inp" id="phone-number" placeholder="+country code - number" value="+971 528771983">
     </div>
 
     <!-- Our WhatsApp Numbers -->
-    <div class="lbl" style="margin-top:20px">Our WhatsApp Numbers for Communication</div>
+    <div class="lbl">Our WhatsApp Numbers for Communication</div>
     <div id="our-wa-list">
       <div class="seg-row wa-item">
         <div class="seg-icon-cell" style="background:var(--cell-bg);border:1.5px solid var(--inp-border);border-right:none"><svg width="14" height="14" viewBox="0 0 24 24" fill="#25a244"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/><path d="M12 0C5.374 0 0 5.373 0 12c0 2.126.553 4.127 1.519 5.874L0 24l6.335-1.508A11.946 11.946 0 0012 24c6.626 0 12-5.374 12-12S18.626 0 12 0zm0 21.818a9.818 9.818 0 01-5.006-1.375l-.36-.214-3.727.978.995-3.636-.235-.374A9.817 9.817 0 012.182 12C2.182 6.579 6.579 2.182 12 2.182S21.818 6.579 21.818 12 17.421 21.818 12 21.818z"/></svg></div>
-        <input type="text" class="seg-name-inp wa-name" placeholder="Name" value="Devina">
+        <input type="text" class="seg-name-inp wa-name" placeholder="Name">
         <div class="seg-arr" style="background:var(--cell-bg);border-top:1.5px solid var(--inp-border);border-bottom:1.5px solid var(--inp-border)">›</div>
-        <input type="tel" class="seg-num-inp no-rr wa-num" placeholder="+country code - number" value="+918899078882">
+        <input type="tel" class="seg-num-inp no-rr wa-num" placeholder="+country code - number">
         <div class="seg-lock-cell" onclick="toggleLock(this)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div>
       </div>
       <div class="seg-row wa-item">
         <div class="seg-icon-cell" style="background:var(--cell-bg);border:1.5px solid var(--inp-border);border-right:none"><svg width="14" height="14" viewBox="0 0 24 24" fill="#25a244"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/><path d="M12 0C5.374 0 0 5.373 0 12c0 2.126.553 4.127 1.519 5.874L0 24l6.335-1.508A11.946 11.946 0 0012 24c6.626 0 12-5.374 12-12S18.626 0 12 0zm0 21.818a9.818 9.818 0 01-5.006-1.375l-.36-.214-3.727.978.995-3.636-.235-.374A9.817 9.817 0 012.182 12C2.182 6.579 6.579 2.182 12 2.182S21.818 6.579 21.818 12 17.421 21.818 12 21.818z"/></svg></div>
-        <input type="text" class="seg-name-inp wa-name" placeholder="Name" value="Tejas">
+        <input type="text" class="seg-name-inp wa-name" placeholder="Name">
         <div class="seg-arr" style="background:var(--cell-bg);border-top:1.5px solid var(--inp-border);border-bottom:1.5px solid var(--inp-border)">›</div>
-        <input type="tel" class="seg-num-inp no-rr wa-num" placeholder="+country code - number" value="+971 528771983">
+        <input type="tel" class="seg-num-inp no-rr wa-num" placeholder="+country code - number">
         <div class="seg-lock-cell" onclick="toggleLock(this)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div>
       </div>
     </div>
-    <button class="btn btn-add" onclick="addOurWA()">
-      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
-      Add Another Number
+    <button class="btn btn-add" onclick="addOurWA()" style="margin-top:8px">
+      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg> Add Another Number
     </button>
+  </div>
+
+  <!-- ── Card 2: Client Inputs ── -->
+  <div class="card">
+    <div class="card-hdr"><h2>Your Details</h2></div>
+
+    <!-- Official Email -->
+    <div class="lbl">
+      Official Email ID
+      <span class="tip-wrap" style="margin-left:2px">
+        <span class="tip-icon">i</span>
+        <span class="tip-bubble">Use your organization's domain email (e.g. you@yourcompany.com). Personal emails like Gmail are not accepted.</span>
+      </span>
+    </div>
+    <div class="info-box">
+      <div class="info-dot">i</div>
+      <span>Please create an official email ID within your organization's domain and provide it below for seamless onboarding.</span>
+    </div>
+    <div class="email-row" style="margin-bottom:22px">
+      <input type="email" id="official-email" placeholder="example@yourcompany.com">
+    </div>
 
     <hr class="div">
 
-    <!-- Customer WhatsApp Numbers -->
+    <!-- Emergency WhatsApp -->
     <div class="lbl">Your Emergency WhatsApp Numbers for Communication <span class="req">*</span></div>
     <div id="your-wa-list">
       <div class="seg-row cust-wa-item">
@@ -597,9 +672,8 @@ hr.div { border: none; border-top: 1px solid var(--inp-border); margin: 20px 0; 
         <input type="tel" class="seg-num-inp cust-num" placeholder="+country code - number">
       </div>
     </div>
-    <button class="btn btn-add" onclick="addYourWA()">
-      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
-      Add Another Number
+    <button class="btn btn-add" onclick="addYourWA()" style="margin-top:8px">
+      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg> Add Another Number
     </button>
   </div>
 
@@ -611,31 +685,39 @@ hr.div { border: none; border-top: 1px solid var(--inp-border); margin: 20px 0; 
       <div class="cred-lbl-cell" style="padding-left:14px">Platform</div>
       <div class="cred-lbl-cell">Username</div>
       <div class="cred-lbl-cell">Password</div>
+      <div class="cred-lbl-cell">OTP Goes To</div>
       <div></div>
     </div>
 
     <div id="platform-list">
-      <div class="cred-row"><div class="cred-plat">Pricelabs <span>›</span></div><input type="text" class="cred-inp" placeholder="Username"><input type="password" class="cred-inp" placeholder="Password"><div class="cred-lock" onclick="togglePwd(this)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div></div>
-      <div class="cred-row"><div class="cred-plat">Booking.com <span>›</span></div><input type="text" class="cred-inp" placeholder="Username"><input type="password" class="cred-inp" placeholder="Password"><div class="cred-lock" onclick="togglePwd(this)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div></div>
-      <div class="cred-row"><div class="cred-plat">PMS <span>›</span></div><input type="text" class="cred-inp" placeholder="Username"><input type="password" class="cred-inp" placeholder="Password"><div class="cred-lock" onclick="togglePwd(this)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div></div>
-      <div class="cred-row"><div class="cred-plat">Expedia <span>›</span></div><input type="text" class="cred-inp" placeholder="Username"><input type="password" class="cred-inp" placeholder="Password"><div class="cred-lock" onclick="togglePwd(this)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div></div>
-      <div class="cred-row"><div class="cred-plat">VRBO <span>›</span></div><input type="text" class="cred-inp" placeholder="Username"><input type="password" class="cred-inp" placeholder="Password"><div class="cred-lock" onclick="togglePwd(this)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div></div>
+      <div class="cred-row"><div class="cred-plat">Pricelabs <span>›</span></div><input type="text" class="cred-inp" placeholder="Username"><input type="password" class="cred-inp" placeholder="Password"><input type="text" class="cred-inp cred-otp" placeholder="Name / Number"><div class="cred-lock" onclick="togglePwd(this)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div></div>
+      <div class="cred-row"><div class="cred-plat">Booking.com <span>›</span></div><input type="text" class="cred-inp" placeholder="Username"><input type="password" class="cred-inp" placeholder="Password"><input type="text" class="cred-inp cred-otp" placeholder="Name / Number"><div class="cred-lock" onclick="togglePwd(this)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div></div>
+      <div class="cred-row"><div class="cred-plat">PMS <span>›</span><span class="tip-wrap" style="margin-left:4px;display:inline-flex;align-items:center;position:relative;z-index:50"><span class="tip-icon">i</span><span class="tip-bubble" style="width:240px;bottom:calc(100% + 8px);top:auto;left:0;transform:none;z-index:999">Property Management System such as Guesty, Hostaway, Cloudbeds, etc.</span></span></div><input type="text" class="cred-inp" placeholder="Username"><input type="password" class="cred-inp" placeholder="Password"><input type="text" class="cred-inp cred-otp" placeholder="Name / Number"><div class="cred-lock" onclick="togglePwd(this)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div></div>
+      <div class="cred-row"><div class="cred-plat">Expedia <span>›</span></div><input type="text" class="cred-inp" placeholder="Username"><input type="password" class="cred-inp" placeholder="Password"><input type="text" class="cred-inp cred-otp" placeholder="Name / Number"><div class="cred-lock" onclick="togglePwd(this)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div></div>
+      <div class="cred-row"><div class="cred-plat">VRBO <span>›</span></div><input type="text" class="cred-inp" placeholder="Username"><input type="password" class="cred-inp" placeholder="Password"><input type="text" class="cred-inp cred-otp" placeholder="Name / Number"><div class="cred-lock" onclick="togglePwd(this)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div></div>
     </div>
 
     <div style="display:flex;justify-content:flex-end;margin-top:10px">
       <button class="btn btn-add" onclick="addPlatform()">
-        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
-        Add Another Platform
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg> Add Another Platform
       </button>
     </div>
   </div>
 
-  <button class="btn btn-submit" id="submit-btn" onclick="submitForm()">Submit</button>
+  <!-- ── Card 4: Remarks / Comments ── -->
+  <div class="card">
+    <div class="card-hdr"><h2>Remarks &amp; Comments</h2></div>
+    <div class="lbl">Additional notes, special instructions, or anything else you'd like us to know</div>
+    <textarea id="remarks" rows="5" placeholder="e.g. We have 3 properties under different entity names. The PMS is shared across all. Let us know if you need separate logins..."
+      style="width:100%;padding:12px 14px;background:var(--inp-bg);border:1.5px solid var(--inp-border);border-radius:10px;font-family:'DM Sans',sans-serif;font-size:.9rem;color:var(--charcoal);resize:vertical;outline:none;transition:border-color .2s,box-shadow .2s;line-height:1.6"></textarea>
+  </div>
+
+    <button class="btn btn-submit" id="submit-btn" onclick="submitForm()">Submit</button>
 
 </div><!-- /.wrap -->
 
 <!-- ═══════════════════ JS ═══════════════════ -->
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
 /* ── State ── */
 let notifEmail = 'samruddhi.waghchaure@strategycues.com';
 
@@ -648,19 +730,15 @@ function applyPrefill() {
   const pn  = g('pre-pname'),  pp  = g('pre-pnum');
   const w1n = g('pre-w1name'), w1p = g('pre-w1num');
   const w2n = g('pre-w2name'), w2p = g('pre-w2num');
-  if (pn) document.getElementById('phone-name').value = pn;
-  if (pp) document.getElementById('phone-number').value = pp;
-  const rows = document.querySelectorAll('.wa-item');
-  if (rows[0]) {
-    if (w1n) rows[0].querySelector('.wa-name').value = w1n;
-    if (w1p) rows[0].querySelector('.wa-num').value  = w1p;
-  }
-  if (rows[1]) {
-    if (w2n) rows[1].querySelector('.wa-name').value = w2n;
-    if (w2p) rows[1].querySelector('.wa-num').value  = w2p;
-  }
+  const platRows = document.querySelectorAll('#pre-platforms .pre-plat-row');
+  const platData = Array.from(platRows).map(r => ({
+    u: r.querySelector('.pre-u')?.value||'',
+    p: r.querySelector('.pre-p')?.value||'',
+    o: r.querySelector('.pre-o')?.value||''
+  }));
+  applyFromParams({ pn, pp, w1n, w1p, w2n, w2p, platData });
   closeOv('modal-prefill');
-  toast('Contact info applied ✓');
+  toast('Pre-fill applied ✓');
 }
 
 /* ── Generate shareable link ── */
@@ -669,6 +747,16 @@ function generateLink() {
   const w1n = g('pre-w1name'), w1p = g('pre-w1num');
   const w2n = g('pre-w2name'), w2p = g('pre-w2num');
 
+  // Collect platform pre-fills from modal
+  const platRows = document.querySelectorAll('#pre-platforms .pre-plat-row');
+  const platData = [];
+  platRows.forEach(r => {
+    const u = r.querySelector('.pre-u')?.value||'';
+    const p = r.querySelector('.pre-p')?.value||'';
+    const o = r.querySelector('.pre-o')?.value||'';
+    platData.push({ u, p, o });
+  });
+
   const params = new URLSearchParams();
   if (pn)  params.set('pn',  pn);
   if (pp)  params.set('pp',  pp);
@@ -676,6 +764,9 @@ function generateLink() {
   if (w1p) params.set('w1p', w1p);
   if (w2n) params.set('w2n', w2n);
   if (w2p) params.set('w2p', w2p);
+  // Encode platform data
+  const pd = platData.map(x => [x.u, x.p, x.o].join('|')).join('||');
+  if (pd.replace(/[|]/g,'').trim()) params.set('pd', pd);
 
   const base = window.location.origin + window.location.pathname;
   const link = base + '?' + params.toString();
@@ -684,11 +775,10 @@ function generateLink() {
   closeOv('modal-prefill');
   openOv('modal-link');
 
-  // Also apply to current page
-  applyFromParams(pn, pp, w1n, w1p, w2n, w2p);
+  applyFromParams({ pn, pp, w1n, w1p, w2n, w2p, platData });
 }
 
-function applyFromParams(pn, pp, w1n, w1p, w2n, w2p) {
+function applyFromParams({ pn, pp, w1n, w1p, w2n, w2p, platData } = {}) {
   if (pn) document.getElementById('phone-name').value = pn;
   if (pp) document.getElementById('phone-number').value = pp;
   const rows = document.querySelectorAll('.wa-item');
@@ -699,6 +789,18 @@ function applyFromParams(pn, pp, w1n, w1p, w2n, w2p) {
   if (rows[1]) {
     if (w2n) rows[1].querySelector('.wa-name').value = w2n;
     if (w2p) rows[1].querySelector('.wa-num').value  = w2p;
+  }
+  // Apply platform credentials
+  if (platData && platData.length) {
+    const credRows = document.querySelectorAll('#platform-list .cred-row');
+    platData.forEach((pd, i) => {
+      if (!credRows[i]) return;
+      const inps = credRows[i].querySelectorAll('.cred-inp');
+      if (inps[0] && pd.u) inps[0].value = pd.u;
+      if (inps[1] && pd.p) inps[1].value = pd.p;
+      const otp = credRows[i].querySelector('.cred-otp');
+      if (otp && pd.o) otp.value = pd.o;
+    });
   }
 }
 
@@ -709,12 +811,12 @@ function loadFromURL() {
     const pn  = p.get('pn'),  pp  = p.get('pp');
     const w1n = p.get('w1n'), w1p = p.get('w1p');
     const w2n = p.get('w2n'), w2p = p.get('w2p');
-    if (pn || pp || w1n || w1p || w2n || w2p) {
-      // Hide admin bar for partner view
+    const pd  = p.get('pd');
+    const platData = pd ? pd.split('||').map(s => { const [u,p,o] = s.split('|'); return {u,p,o}; }) : [];
+    if (pn || pp || w1n || w1p || w2n || w2p || (platData.length && pd.replace(/[|]/g,'').trim())) {
       const bar = document.querySelector('.admin-bar');
       if (bar) bar.style.display = 'none';
-      // Apply values after DOM settles
-      setTimeout(() => applyFromParams(pn, pp, w1n, w1p, w2n, w2p), 50);
+      setTimeout(() => applyFromParams({ pn, pp, w1n, w1p, w2n, w2p, platData }), 50);
     }
   } catch(e) {}
 }
@@ -785,6 +887,7 @@ function addPlatform() {
     <input type="text" class="cred-plat-inp" placeholder="Platform name">
     <input type="text" class="cred-inp" placeholder="Username">
     <input type="password" class="cred-inp" placeholder="Password">
+    <input type="text" class="cred-inp cred-otp" placeholder="OTP goes to (Name / Number)">
     <div class="cred-lock" onclick="togglePwd(this)">${LOCK_SVG}</div>`;
   list.appendChild(d); d.style.animation = 'fadeUp .25s ease'; d.querySelector('input').focus();
 }
@@ -812,6 +915,7 @@ function collect() {
     officialEmail: g('official-email'),
     phoneName:     g('phone-name'),
     phoneNumber:   g('phone-number'),
+    remarks:       document.getElementById('remarks')?.value?.trim()||'',
     ourWA: [], yourWA: [], platforms: []
   };
   document.querySelectorAll('.wa-item').forEach(r => {
@@ -829,7 +933,8 @@ function collect() {
     const platform = platDiv ? platDiv.textContent.replace('›','').trim() : (platInp?.value||'');
     const username = inps[0]?.value||'';
     const password = inps[1]?.value||'';
-    if (platform) data.platforms.push({ platform, username, password });
+    const otp      = r.querySelector('.cred-otp')?.value||'';
+    if (platform) data.platforms.push({ platform, username, password, otp });
   });
   return data;
 }
@@ -884,11 +989,7 @@ function buildEmailHTML(d) {
 /* ── Submit ── */
 async function submitForm() {
   const emailVal = g('official-email');
-  if (!emailVal) {
-    toast('⚠ Please enter the Official Email ID first'); 
-    document.getElementById('official-email').focus(); 
-    return;
-  }
+  // officialEmail optional — no block if empty
 
   // Validate mandatory emergency WA field
   const custWAItems = document.querySelectorAll('.cust-wa-item');
