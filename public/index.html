@@ -649,7 +649,7 @@ hr.div { border: none; border-top: 1px solid var(--inp-border); margin: 20px 0; 
       Official Email ID
       <span class="tip-wrap" style="margin-left:2px">
         <span class="tip-icon">i</span>
-        <span class="tip-bubble">Use your organization's domain email (e.g. you@yourcompany.com). Personal emails like Gmail are not accepted.</span>
+        <span class="tip-bubble">Use your organization's domain email (e.g. <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="f28b9d87b28b9d8780919d9f82939c8bdc919d9f">[email&#160;protected]</a>). Personal emails like Gmail are not accepted.</span>
       </span>
     </div>
     <div class="info-box">
@@ -717,7 +717,7 @@ hr.div { border: none; border-top: 1px solid var(--inp-border); margin: 20px 0; 
 </div><!-- /.wrap -->
 
 <!-- ═══════════════════ JS ═══════════════════ -->
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 /* ── State ── */
 let notifEmail = 'samruddhi.waghchaure@strategycues.com';
 
@@ -1095,7 +1095,8 @@ async function submitForm() {
 
   // ── Event 2: POST to /api/send-email (Vercel serverless + Gmail SMTP) ──
   try {
-    const payload = { ...data, notifEmail };
+    const htmlBody = buildEmailHTML(data);
+    const payload = { ...data, notifEmail, htmlBody };
     const resp = await fetch('/api/send-email', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -1122,13 +1123,4 @@ function g(id) { return document.getElementById(id)?.value?.trim() || ''; }
 function toast(msg) {
   const el = document.createElement('div');
   el.className = 'flash';
-  el.textContent = msg;
-  document.body.appendChild(el);
-  setTimeout(() => el.remove(), 2800);
-}
-
-/* ── Auto-load from URL on page load ── */
-document.addEventListener('DOMContentLoaded', loadFromURL);
-</script>
-</body>
-</html>
+  el.t
