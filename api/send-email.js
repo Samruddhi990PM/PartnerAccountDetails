@@ -26,7 +26,7 @@ module.exports = async function handler(req, res) {
       officialEmail, phoneName, phoneNumber, remarks, ourWA, yourWA, platforms
     });
 
-    const transporter = nodemailer.createTransporter({
+    const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
         user: process.env.GMAIL_USER,
