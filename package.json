@@ -2,9 +2,8 @@
   "name": "strategycues-onboarding-form",
   "version": "1.0.0",
   "description": "Strategy Cues client onboarding form with Gmail SMTP email delivery",
-  "type": "module",
   "dependencies": {
-    "nodemailer": "^8.0.1"
+    "nodemailer": "^6.9.13"
   },
   "engines": {
     "node": ">=18"
