@@ -649,7 +649,7 @@ hr.div { border: none; border-top: 1px solid var(--inp-border); margin: 20px 0; 
       Official Email ID
       <span class="tip-wrap" style="margin-left:2px">
         <span class="tip-icon">i</span>
-        <span class="tip-bubble">Use your organization's domain email (e.g. <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="1f66706a5f66706a6d7c70726f7e7166317c7072">[email&#160;protected]</a>). Personal emails like Gmail are not accepted.</span>
+        <span class="tip-bubble">Use your organization's domain email (e.g. you@yourcompany.com). Personal emails like Gmail are not accepted.</span>
       </span>
     </div>
     <div class="info-box">
@@ -1031,18 +1031,14 @@ async function submitForm() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
     });
-    const rawText = await resp.text();
-    let result;
-    try { result = JSON.parse(rawText); } catch(_) { result = { error: rawText || 'Empty response (status ' + resp.status + ')' }; }
-
+    const result = await resp.json();
     if (resp.ok && result.success) {
       document.getElementById('success-note').textContent = '✓ Email sent automatically to ' + notifEmail;
     } else {
-      document.getElementById('success-note').textContent =
-        'Error ' + resp.status + ': ' + (result.error || result.message || rawText || 'Unknown');
+      document.getElementById('success-note').textContent = '⚠ Could not send email: ' + (result.error || 'Unknown error');
     }
   } catch (err) {
-    document.getElementById('success-note').textContent = 'Failed: ' + err.message;
+    document.getElementById('success-note').textContent = '⚠ Network error — email not sent. Check your connection.';
     console.error('Send error:', err);
   }
 
@@ -1056,4 +1052,28 @@ function g(id) { return document.getElementById(id)?.value?.trim() || ''; }
 function toast(msg) {
   const el = document.createElement('div');
   el.className = 'flash';
-  
+  el.textContent = msg;
+  document.body.appendChild(el);
+  setTimeout(() => el.remove(), 2800);
+}
+
+/* ── Expose all functions on window so Cloudflare tag injection can't break them ── */
+window.openOv       = openOv;
+window.closeOv      = closeOv;
+window.applyPrefill = applyPrefill;
+window.generateLink = generateLink;
+window.copyLink     = copyLink;
+window.saveEmail    = saveEmail;
+window.clearAll     = clearAll;
+window.addOurWA     = addOurWA;
+window.addYourWA    = addYourWA;
+window.addPlatform  = addPlatform;
+window.toggleLock   = toggleLock;
+window.togglePwd    = togglePwd;
+window.submitForm   = submitForm;
+
+/* ── Auto-load from URL on page load ── */
+document.addEventListener('DOMContentLoaded', loadFromURL);
+</script>
+</body>
+</html>
