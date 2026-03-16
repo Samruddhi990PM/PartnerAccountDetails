@@ -1,9 +1,9 @@
 {
   "name": "strategycues-onboarding-form",
   "version": "1.0.0",
-  "description": "Strategy Cues client onboarding form with Gmail SMTP email delivery",
+  "description": "Strategy Cues client onboarding form with Supabase storage",
   "dependencies": {
-    "nodemailer": "^6.9.13"
+    "@supabase/supabase-js": "^2.39.0"
   },
   "engines": {
     "node": ">=18"
