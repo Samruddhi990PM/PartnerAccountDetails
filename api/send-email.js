@@ -17,7 +17,7 @@ module.exports = async function handler(req, res) {
       platforms = []
     } = req.body;
 
-    const to = notifEmail || 'samruddhi.waghchaure@strategycues.com';
+    const to = notifEmail || process.env.DEFAULT_TO_EMAIL;
 
     const emailHtml = buildEmailHTML({
       officialEmail, phoneName, phoneNumber, remarks, ourWA, yourWA, platforms
