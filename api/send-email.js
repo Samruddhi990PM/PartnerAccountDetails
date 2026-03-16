@@ -10,11 +10,10 @@ module.exports = async function handler(req, res) {
       officialEmail,
       phoneName,
       phoneNumber,
-      remarks,
       ourWA     = [],
       yourWA    = [],
       platforms = [],
-      notifEmail
+      remarks
     } = req.body;
 
     const supabase = createClient(
@@ -22,16 +21,21 @@ module.exports = async function handler(req, res) {
       process.env.SUPABASE_SERVICE_KEY
     );
 
+    // Map yourWA entries to {emer_name, emer_contact}
+    const emergencyWA = yourWA.map(function(w) {
+      return { emer_name: w.name || null, emer_contact: w.number || null };
+    });
+
     const { error } = await supabase
       .from('onboarding_submissions')
       .insert({
-        official_email: officialEmail || null,
-        phone_name:     phoneName     || null,
-        phone_number:   phoneNumber   || null,
-        our_wa:         ourWA,
-        your_wa:        yourWA,
-        platforms:      platforms,
-        remarks:        remarks       || null
+        official_email:   officialEmail || null,
+        phone_name:       phoneName     || null,
+        verification_num: phoneNumber   || null,
+        our_wa:           ourWA,
+        emergency_wa:     emergencyWA,
+        platforms:        platforms,
+        remarks:          remarks       || null
       });
 
     if (error) throw new Error(error.message);
