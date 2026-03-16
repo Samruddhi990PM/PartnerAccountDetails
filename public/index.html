@@ -649,7 +649,7 @@ hr.div { border: none; border-top: 1px solid var(--inp-border); margin: 20px 0; 
       Official Email ID
       <span class="tip-wrap" style="margin-left:2px">
         <span class="tip-icon">i</span>
-        <span class="tip-bubble">Use your organization's domain email (e.g. you@yourcompany.com). Personal emails like Gmail are not accepted.</span>
+        <span class="tip-bubble">Use your organization's domain email (e.g. <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="166f7963566f79636475797b6677786f3875797b">[email&#160;protected]</a>). Personal emails like Gmail are not accepted.</span>
       </span>
     </div>
     <div class="info-box">
@@ -1018,12 +1018,7 @@ async function submitForm() {
 
   const data = collect();
 
-  // ── Event 1: Success message ──
-  setTimeout(() => {
-    openOv('overlay-success');
-  }, 400);
-
-  // ── Event 2: POST to /api/send-email (Vercel serverless + Gmail SMTP) ──
+  // ── Save to Supabase, then show success or failure ──
   try {
     const payload = { ...data, notifEmail };
     const resp = await fetch('/api/send-email', {
@@ -1033,12 +1028,17 @@ async function submitForm() {
     });
     const result = await resp.json();
     if (resp.ok && result.success) {
-      document.getElementById('success-note').textContent = '✓ Email sent automatically to ' + notifEmail;
+      // ── Success: show overlay ──
+      openOv('overlay-success');
+      document.getElementById('success-note').textContent = '✓ Saved';
     } else {
-      document.getElementById('success-note').textContent = '⚠ Could not send email: ' + (result.error || 'Unknown error');
+      // ── Failure: show toast only, no overlay ──
+      toast('Could not save data — please let the team know.');
+      console.error('Save error:', result.error);
     }
   } catch (err) {
-    document.getElementById('success-note').textContent = '⚠ Network error — email not sent. Check your connection.';
+    // ── Network/parse error: show toast only, no overlay ──
+    toast('Could not save data — please let the team know.');
     console.error('Send error:', err);
   }
 
