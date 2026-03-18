@@ -5,6 +5,12 @@ module.exports = async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
+  // ── Debug logging ──
+  console.log('Request received, body keys:', req.body ? Object.keys(req.body) : 'BODY IS NULL');
+  console.log('SUPABASE_URL set:', !!process.env.SUPABASE_URL);
+  console.log('SUPABASE_SERVICE_KEY set:', !!process.env.SUPABASE_SERVICE_KEY);
+  console.log('RESEND_API_KEY set:', !!process.env.RESEND_API_KEY);
+
   try {
     const {
       officialEmail,
@@ -160,23 +166,31 @@ module.exports = async function handler(req, res) {
       + '</div>'
       + '</div></body></html>';
 
-    var emailResp = await fetch('https://api.resend.com/emails', {
-      method: 'POST',
-      headers: {
-        'Authorization': 'Bearer ' + process.env.RESEND_API_KEY,
-        'Content-Type':  'application/json'
-      },
-      body: JSON.stringify({
-        from:    'Strategy Cues Onboarding <onboarding@resend.dev>',
-        to:      [to, 'reports@strategycues.com'],
-        subject: 'New Onboarding Submission - ' + new Date().toLocaleDateString(),
-        html:    html
-      })
-    });
+    // ── Send email — failure here should NOT block success response ──
+    try {
+      var emailResp = await fetch('https://api.resend.com/emails', {
+        method: 'POST',
+        headers: {
+          'Authorization': 'Bearer ' + process.env.RESEND_API_KEY,
+          'Content-Type':  'application/json'
+        },
+        body: JSON.stringify({
+          from:    'Strategy Cues Onboarding <onboarding@mail.strategycues.com>',
+          to:      ['YOUR_RESEND_ACCOUNT_EMAIL'],  // TEMP — revert after testing
+          subject: 'New Onboarding Submission - ' + new Date().toLocaleDateString(),
+          html:    html
+        })
+      });
+      var emailResult = await emailResp.json();
+      if (!emailResp.ok) {
+        console.error('Resend error:', emailResult.message || JSON.stringify(emailResult));
+      }
+    } catch (emailErr) {
+      console.error('Email send failed:', emailErr.message);
+      // Data is already saved in Supabase — email failure is non-fatal
+    }
 
-    var emailResult = await emailResp.json();
-    if (!emailResp.ok) throw new Error(emailResult.message || JSON.stringify(emailResult));
-
+    // ── Always return success if Supabase saved OK ──
     return res.status(200).json({ success: true });
 
   } catch (err) {
