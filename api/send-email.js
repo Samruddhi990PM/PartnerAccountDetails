@@ -5,12 +5,6 @@ module.exports = async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  // ── Debug logging ──
-  console.log('Request received, body keys:', req.body ? Object.keys(req.body) : 'BODY IS NULL');
-  console.log('SUPABASE_URL set:', !!process.env.SUPABASE_URL);
-  console.log('SUPABASE_SERVICE_KEY set:', !!process.env.SUPABASE_SERVICE_KEY);
-  console.log('RESEND_API_KEY set:', !!process.env.RESEND_API_KEY);
-
   try {
     const {
       officialEmail,
@@ -23,7 +17,8 @@ module.exports = async function handler(req, res) {
       notifEmail
     } = req.body;
 
-    const to = notifEmail || 'samruddhi.waghchaure@strategycues.com';
+    // Sanitise notifEmail — trim whitespace, fallback to default
+    const to = (notifEmail || '').trim() || 'samruddhi.waghchaure@strategycues.com';
 
     const supabase = createClient(
       process.env.SUPABASE_URL,
@@ -176,7 +171,9 @@ module.exports = async function handler(req, res) {
         },
         body: JSON.stringify({
           from:    'Strategy Cues Onboarding <onboarding@mail.strategycues.com>',
-          to:      ['YOUR_RESEND_ACCOUNT_EMAIL'],  // TEMP — revert after testing
+          to:      [to, 'reports@strategycues.com'].filter(function(e) {
+            return typeof e === 'string' && e.trim().indexOf('@') !== -1;
+          }),
           subject: 'New Onboarding Submission - ' + new Date().toLocaleDateString(),
           html:    html
         })
