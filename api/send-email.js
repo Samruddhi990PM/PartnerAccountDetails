@@ -15,7 +15,7 @@ module.exports = async function handler(req, res) {
     remarks
   } = req.body;
 
-  const dashboardUrl = (process.env.VERCEL_URL_FULL || 'https://your-site.vercel.app') + '/dashboard';
+  const dashboardUrl = (process.env.VERCEL_URL_FULL || 'https://partner-account-details-six.vercel.app').replace(/\/+$/, '') + '/dashboard';
   const ownerName   = officialEmail || phoneName || 'A new owner';
 
   // ─────────────────────────────────────────
@@ -94,7 +94,7 @@ module.exports = async function handler(req, res) {
       },
       body: JSON.stringify({
         from:    'Strategy Cues <onboarding@resend.dev>',
-        to:      ['samruddhi.waghchaure@strategycues.com'],  // TEMP - revert after DNS verified
+        to:      ['YOUR_RESEND_ACCOUNT_EMAIL'],  // TEMP - revert after DNS verified
         subject: 'New Onboarding Submission - ' + ownerName,
         html:    emailHtml
       })

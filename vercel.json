@@ -1,7 +1,7 @@
 {
   "rewrites": [
-    { "source": "/api/(.*)",   "destination": "/api/$1" },
-    { "source": "/dashboard",  "destination": "/public/dashboard.html" },
-    { "source": "/((?!api|dashboard).*)", "destination": "/public/index.html" }
+    { "source": "/api/:path*",  "destination": "/api/:path*" },
+    { "source": "/dashboard",   "destination": "/public/dashboard.html" },
+    { "source": "/:path*",      "destination": "/public/index.html" }
   ]
 }
