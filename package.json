@@ -1,7 +1,7 @@
 {
   "name": "strategycues-onboarding-form",
   "version": "1.0.0",
-  "description": "Strategy Cues client onboarding form with Supabase storage",
+  "description": "Strategy Cues client onboarding form",
   "dependencies": {
     "@supabase/supabase-js": "^2.39.0"
   },

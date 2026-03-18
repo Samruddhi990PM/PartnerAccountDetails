@@ -1,2 +1,7 @@
+# Dependencies
 node_modules/
-node_modules/
+
+
+# Test files with hardcoded secrets — never commit these
+test-supabase.js
+test-email.js
