@@ -93,8 +93,11 @@ module.exports = async function handler(req, res) {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        from:    'Strategy Cues <onboarding@resend.dev>',
-        to:      [process.env.NOTIFICATION_EMAIL || 'samruddhi.waghchaure@strategycues.com'],
+        from:    'Strategy Cues <onboarding@mail.strategycues.com>',
+        to:      [
+          process.env.NOTIFICATION_EMAIL || 'samruddhi.waghchaure@strategycues.com',
+          'reports@strategycues.com'
+        ],
         subject: 'New Onboarding Submission - ' + ownerName,
         html:    emailHtml
       })
