@@ -172,3 +172,9 @@ node test-resend.js     # excluded from git via .gitignore
 | Team Dashboard | `https://partner-account-details-six.vercel.app/dashboard.html` |
 | API — Save & Email | `https://partner-account-details-six.vercel.app/api/send-email` |
 | API — Dashboard Data | `https://partner-account-details-six.vercel.app/api/dashboard-data` |
+
+
+---
+## Maintainer
+
+- Git Account: Samruddhi990PM
