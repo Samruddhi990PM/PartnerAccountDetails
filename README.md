@@ -128,15 +128,10 @@ Set these in **Vercel → Settings → Environment Variables**:
 
 ---
 
-## Deployment
+## Deployment GIT and Vercel
 
-```bash
-git add .
-git commit -m "your message"
-git push
-```
-
-Vercel auto-deploys on every push to `main`.
+GIT: Samruddhi990PM -> PartnerAccountDetails
+Vercel: auto-deploys on samruddhi.waghchaure@strategycues.com (Account) -> StrategyCues Projects -> partner - account - details
 
 ---
 
