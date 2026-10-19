@@ -55,6 +55,7 @@ PartnerAccountDetails/
 | Our WhatsApp | Name, Number (multiple) |
 | Emergency WhatsApp | Name, Contact (multiple) |
 | Platform Credentials | Platform, Username, Password, OTP Goes To (multiple) |
+| Pricelabs API is Enabled | Yes / No dropdown |
 | Remarks | Additional notes |
 
 ---
@@ -108,6 +109,7 @@ Set these in **Vercel → Settings → Environment Variables**:
 | `emergency_wa` | jsonb | Client emergency WhatsApp array |
 | `platforms` | jsonb | Platform credentials array |
 | `remarks` | text | Additional notes |
+| `pricelabs_api_enabled` | text | 'Yes' / 'No' — whether Pricelabs API is enabled |
 
 ### `failed_submissions`
 | Column | Type | Description |
@@ -128,15 +130,10 @@ Set these in **Vercel → Settings → Environment Variables**:
 
 ---
 
-## Deployment
+## Deployment GIT and Vercel
 
-```bash
-git add .
-git commit -m "your message"
-git push
-```
-
-Vercel auto-deploys on every push to `main`.
+GIT: Samruddhi990PM -> PartnerAccountDetails
+Vercel: auto-deploys on samruddhi.waghchaure@strategycues.com (Account) -> StrategyCues Projects -> partner - account - details
 
 ---
 

@@ -12,7 +12,8 @@ module.exports = async function handler(req, res) {
     ourWA     = [],
     yourWA    = [],
     platforms = [],
-    remarks
+    remarks,
+    pricelabsApiEnabled
   } = req.body;
 
   const dashboardUrl = (process.env.VERCEL_URL_FULL || 'https://partner-account-details-six.vercel.app').replace(/\/+$/, '') + '/dashboard.html';
@@ -40,7 +41,8 @@ module.exports = async function handler(req, res) {
         our_wa:           ourWA,
         emergency_wa:     emergencyWA,
         platforms:        platforms,
-        remarks:          remarks       || null
+        remarks:          remarks       || null,
+        pricelabs_api_enabled: pricelabsApiEnabled || null
       });
 
     if (error) {
@@ -78,6 +80,7 @@ module.exports = async function handler(req, res) {
       + '<tr style="background:#f5f0e0;"><th colspan="2" style="padding:8px 12px;text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:#555;border:1px solid #ddd;">Submission Summary</th></tr>'
       + '<tr><td style="padding:8px 12px;border:1px solid #ddd;font-weight:600;color:#555;width:180px;">Official Email</td><td style="padding:8px 12px;border:1px solid #ddd;">' + (officialEmail || '-') + '</td></tr>'
       + '<tr style="background:#fafaf6;"><td style="padding:8px 12px;border:1px solid #ddd;font-weight:600;color:#555;">Contact Name</td><td style="padding:8px 12px;border:1px solid #ddd;">' + (phoneName || '-') + '</td></tr>'
+      + '<tr><td style="padding:8px 12px;border:1px solid #ddd;font-weight:600;color:#555;">Pricelabs API Enabled</td><td style="padding:8px 12px;border:1px solid #ddd;">' + (pricelabsApiEnabled || '-') + '</td></tr>'
       + '<tr><td style="padding:8px 12px;border:1px solid #ddd;font-weight:600;color:#555;">Platforms</td><td style="padding:8px 12px;border:1px solid #ddd;">' + (platforms.map(function(p){ return p.platform; }).filter(Boolean).join(', ') || '-') + '</td></tr>'
       + '</table>'
 
