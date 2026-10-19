@@ -133,6 +133,7 @@ Set these in **Vercel → Settings → Environment Variables**:
 ## Deployment GIT and Vercel
 
 GIT: Samruddhi990PM -> PartnerAccountDetails
+
 Vercel: auto-deploys on samruddhi.waghchaure@strategycues.com (Account) -> StrategyCues Projects -> partner - account - details
 
 ---
