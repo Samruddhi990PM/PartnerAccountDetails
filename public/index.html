@@ -345,8 +345,8 @@ hr.div { border: none; border-top: 1px solid var(--inp-border); margin: 20px 0; 
   font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--charcoal);
   background: var(--inp-bg); outline: none; border-radius: 0; cursor: pointer;
 }
-.cred-row.pl-api { grid-template-columns: 160px 100px; }
-.cred-row.pl-api .cred-plat { border-right: none; }
+.cred-row.pl-api { grid-template-columns: max-content 100px; }
+.cred-row.pl-api .cred-plat { border-right: none; white-space: nowrap; }
 .cred-row.pl-api select.cred-inp { border-right: 1.5px solid var(--inp-border); border-radius: 0 var(--rs) var(--rs) 0; }
 .cred-row select.cred-inp:focus { background: #ffffff; border-color: var(--charcoal); }
 .cred-lock {
